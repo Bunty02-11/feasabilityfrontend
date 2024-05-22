@@ -55,18 +55,20 @@ const ProfileDetails = () => {
     const tabButtonStyle = (isActive) => ({
         padding: '10px 20px',
         cursor: 'pointer',
-        border: 'none',
-        backgroundColor: isActive ? 'gray' : 'lightgray',
-        color: isActive ? 'white' : 'black',
+        border: isActive ? 'none' : '1px solid transparent',
+        borderBottom: isActive ? '2px solid black' : 'none',
+        backgroundColor: 'transparent',
+        color: 'black',
         marginRight: '5px',
         marginLeft: '-500px'
     });
     const tabButtonStyle1 = (isActive) => ({
         padding: '10px 20px',
         cursor: 'pointer',
-        border: 'none',
-        backgroundColor: isActive ? 'gray' : 'lightgray',
-        color: isActive ? 'white' : 'black',
+        border: isActive ? 'none' : '1px solid transparent',
+        borderBottom: isActive ? '2px solid black' : 'none',
+        backgroundColor: 'transparent',
+        color: 'black',
         marginRight: '5px',
     });
 

@@ -1,16 +1,21 @@
-// src/Main.js
 import React from 'react';
 import Header from '../Layout/Header/Header';
 import Footer from '../Layout/Footer/Footer';
 
 const mainStyle = {
-    textAlign: 'center',
-    padding: '200px 0px',
+    padding: '300px 0px',
     backgroundImage: 'url(https://images.unsplash.com/photo-1504903271097-d7e7c7f5f7ad?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Nnx8fGVufDB8fHx8fA%3D%3D)',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
-    color: '#fff',
+};
+
+const mainStyle1 = {
+    padding: '300px 0px',
+    backgroundImage: 'url(https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg)',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
 };
 
 const heroStyle = {
@@ -19,13 +24,32 @@ const heroStyle = {
 };
 
 const h1Style = {
-    fontSize: '48px',
-    marginBottom: '20px',
+    fontSize: '96px',
+    marginTop: '-30px',
+    color: '#000',
+    textAlign: 'center',
 };
 
 const pStyle = {
     fontSize: '18px',
-    marginBottom: '40px',
+    marginBottom: '-20px',
+    color: '#000',
+    textAlign: 'center',
+};
+
+const pStyle1 = {
+    fontSize: '18px',
+    marginTop: '-110px',
+    color: '#000',
+    textAlign: 'center',
+    marginBottom: '200px',
+};
+
+const pStyle2 = {
+    fontSize: '18px',
+    marginTop: '-110px',
+    color: '#000',
+    textAlign: 'center',
 };
 
 const buttonStyle = {
@@ -44,23 +68,26 @@ const buttonHoverStyle = {
 const Main = () => {
     return (
         <>
-        <Header/>
-            <main style={mainStyle}>
-                <section style={heroStyle}>
-                    <h1 style={h1Style}>Just Do It</h1>
-                    <p style={pStyle}>Discover the latest styles from Nike</p>
-                    <button
-                        style={buttonStyle}
-                        onMouseEnter={(e) => e.target.style.backgroundColor = buttonHoverStyle.backgroundColor}
-                        onMouseLeave={(e) => e.target.style.backgroundColor = buttonStyle.backgroundColor}
-                    >
-                        Shop Now
-                    </button>
-                </section>
-                {/* <Footer/> */}
-            </main>
+            <Header />
+            <section style={mainStyle}>
+                <div style={heroStyle}></div>
+            </section>
+            <section>
+                <h4 style={pStyle}>Just Do it</h4><br />
+                <h1 style={h1Style}>Jordan</h1><br />
+                <h4 style={pStyle1}>Get ready to feel the responsive energy return of air zoom and all new reactX foam</h4>
+            </section>
+            <section style={mainStyle1}>
+                <div style={heroStyle}></div>
+            </section>
+            <section>
+                <h4 style={pStyle}>Just Do it</h4><br />
+                <h1 style={h1Style}>Jordan</h1><br />
+                <h4 style={pStyle2}>Get ready to feel the responsive energy return of air zoom and all new reactX foam</h4>
+            </section>
+            <Footer />
         </>
     );
-}
+};
 
 export default Main;
