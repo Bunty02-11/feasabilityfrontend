@@ -1,0 +1,35 @@
+.sidebar {
+    height: 100vh;
+    padding-top: 20px;
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  .sidebar h2 {
+    font-weight: 400;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 30px;
+  }
+  
+  .sidebar ul li {
+    padding: 10px 0;
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #fff;
+  }
+  
+  .sidebar ul li a .fa {
+    margin-right: 20px;
+    font-size: 20px;
+    color: #fff;
+  }
+  

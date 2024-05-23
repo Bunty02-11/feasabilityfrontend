@@ -3,22 +3,18 @@ import React from 'react';
 const ProjectAreaCalculations = () => {
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
-        margin: '20px',
-        width: '600px',
-        height: 'auto',
-        position: 'absolute',
-        top: '100px',
-        right: '30px'
     };
 
     const headingStyle = {
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: '1.2em',
+        marginBottom: '20px',
     };
 
     const tableStyle = {
         width: '100%',
         borderCollapse: 'collapse',
-        marginBottom: '12px'
+        marginBottom: '20px',
     };
 
     const thTdStyle = {
@@ -32,23 +28,21 @@ const ProjectAreaCalculations = () => {
         ...thTdStyle,
         backgroundColor: '#f2f2f2',
         textAlign: 'center',
-        fontSize: '14px',
-        
+        fontSize: '12px',
     };
 
     const highlightStyle = {
-        backgroundColor: '#d9ead3'
+        backgroundColor: '#d9ead3',
     };
 
     const noteStyle = {
         fontSize: '10px',
-        marginTop: '10px'
+        marginTop: '10px',
     };
 
     return (
         <div style={containerStyle}>
-            <h3
-             style={headingStyle}>
+            <h3 style={headingStyle}>
                 Project Area Calculations of CTS No. 2547 & 2548 of Village Eksar in R/C Ward, Borivali, Mumbai
             </h3>
             <table style={tableStyle}>
