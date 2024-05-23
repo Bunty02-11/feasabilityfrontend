@@ -1,24 +1,29 @@
 import React from 'react';
+import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
 
-const ProjectAreaCalculations = () => {
+const ProjectAreaCalculations = ({formData}) => {
+    console.log(formData)
+
+    const darkMode = useDarkMode(false); // Initialize darkMode state
+
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
-        margin: '20px',
-        width: '600px',
-        height: 'auto',
-        position: 'absolute',
-        top: '100px',
-        right: '30px'
+        backgroundColor: darkMode.value ? 'transparent' : 'transparent', // Toggle background color for dark mode
+        color: darkMode.value ? '#fff' : '#000', // Toggle text color for dark mode
     };
 
     const headingStyle = {
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: '1.2em',
+        marginBottom: '20px',
+        backgroundColor: darkMode.value ? 'transparent' : 'transparent', // Toggle background color for dark mode
+        color: darkMode.value ? '#fff' : '#000', // Toggle text color for dark mode
     };
 
     const tableStyle = {
         width: '100%',
         borderCollapse: 'collapse',
-        marginBottom: '12px'
+        marginBottom: '20px',
     };
 
     const thTdStyle = {
@@ -26,29 +31,30 @@ const ProjectAreaCalculations = () => {
         padding: '8px',
         textAlign: 'left',
         fontSize: '10px',
+        border: '1px solid'
     };
 
     const thStyle = {
         ...thTdStyle,
         backgroundColor: '#f2f2f2',
         textAlign: 'center',
-        fontSize: '14px',
-        
+        fontSize: '12px',
+        backgroundColor: darkMode.value ? 'transparent' : '', // Toggle background color for dark mode
+        color: darkMode.value ? '#fff' : '#000', // Toggle text color for dark mode
     };
 
     const highlightStyle = {
-        backgroundColor: '#d9ead3'
+        backgroundColor: darkMode.value ? '#125469' : '#d9ead3',
     };
 
     const noteStyle = {
         fontSize: '10px',
-        marginTop: '10px'
+        marginTop: '10px',
     };
 
     return (
         <div style={containerStyle}>
-            <h3
-             style={headingStyle}>
+            <h3 style={headingStyle}>
                 Project Area Calculations of CTS No. 2547 & 2548 of Village Eksar in R/C Ward, Borivali, Mumbai
             </h3>
             <table style={tableStyle}>
@@ -71,7 +77,7 @@ const ProjectAreaCalculations = () => {
                     <tr>
                         <td style={thTdStyle}>1</td>
                         <td style={thTdStyle}>Area of the Plot</td>
-                        <td style={thTdStyle}>634.70</td>
+                        <td style={thTdStyle}>{6.473}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>2</td>

@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -6,183 +9,114 @@ const Register = () => {
     const [code, setCode] = useState('');
     const [organization, setOrganization] = useState('');
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission here
         console.log('Username:', username);
         // console.log('Password:', password);
+        navigate('/feasibility');
     };
 
     return (
-        <>
-            <div style={containerStyle1}>
-                <img
-                    src={'https://masterbundles.com/wp-content/uploads/2022/03/1-nike-logo-design-%E2%80%93-history-meaning-and-evolution.png'}
-                    alt="Logo"
-                    style={logoStyle}
-                />
-            </div>
-            <div style={containerStyle}>
-                <h1 style={titleStyle}>
-                    Now let's make you a Feasability <br /> Member.
-                </h1>
-                <h4 style={titleStyle1}>
-                    We've sent a code at you email-id
-                </h4>
+        <Container className="p-3">
+            <Row className="justify-content-center">
+                <Col md={12} className="text-center">
+                    <h1 className="mb-3">
+                        Now let's make you a Feasibility <br /> Member.
+                    </h1>
+                    <h4 className="mb-5">
+                        We've sent a code at you email-id
+                    </h4>
+                </Col>
+            </Row>
+            <Row className="justify-content-center">
+                <Col md={6}>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="formBasicEmail" className="mb-3">
+                            <Form.Label>Code*</Form.Label>
+                            <div className="input-group">
+                                <span className="input-group-text" id="basic-addon1">
+                                    <FaEnvelope />
+                                </span>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Code*"
+                                    value={code}
+                                    onChange={(e) => setCode(e.target.value)}
+                                    required
+                                    className="form-control"
+                                />
+                            </div>
+                        </Form.Group>
 
-                <form onSubmit={handleSubmit} style={formStyle}>
-                    <input
-                        type="text"
-                        placeholder="Code*"
-                        style={inputStyle}
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                        required
-                    />
-                    <input
-                        type="text"
-                        placeholder="Username*"
-                        style={inputStyle}
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        style={inputStyle}
-                        value={organization}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    <h5 style={titleStyle2}>
-                    Minimum of 8 characters <br /> Uppercase, Lowercase letters, and one number.
-                    </h5>
-                    <input
-                        type="text"
-                        placeholder="Organization"
-                        style={inputStyle}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                        <Form.Group controlId="formBasicEmail" className="mb-3">
+                            <Form.Label>Username*</Form.Label>
+                            <div className="input-group">
+                                <span className="input-group-text" id="basic-addon1">
+                                    <FaUser />
+                                </span>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Username*"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    required
+                                    className="form-control"
+                                />
+                            </div>
+                        </Form.Group>
 
-                    <div style={buttonContainerStyle}>
-                        <button
-                            style={buttonStyle}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = buttonHoverStyle.backgroundColor}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = buttonStyle.backgroundColor}
-                        >
-                            Continue
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </>
+                        <Form.Group controlId="formBasicPassword" className="mb-3">
+                            <Form.Label>Password*</Form.Label>
+                            <div className="input-group">
+                                <span className="input-group-text" id="basic-addon1">
+                                    <FaLock />
+                                </span>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Password*"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    className="form-control"
+                                />
+                            </div>
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicEmail" className="mb-3">
+                            <Form.Label>Organization</Form.Label>
+                            <div className="input-group">
+                                <span className="input-group-text" id="basic-addon1">
+                                    <FaEnvelope />
+                                </span>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Organization"
+                                    value={organization}
+                                    onChange={(e) => setOrganization(e.target.value)}
+                                    required
+                                    className="form-control"
+                                />
+                            </div>
+                        </Form.Group>
+
+                        <Form.Text className="text-muted">
+                            Minimum of 8 characters <br /> Uppercase, Lowercase letters, and one number.
+                        </Form.Text>
+
+                        <div className="d-flex justify-content-center mt-3">
+                            <Button variant="primary" type="submit" className="w-100">
+                                Continue
+                            </Button>
+                        </div>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
-// Inline CSS styles
-const containerStyle = {
-    fontFamily: 'Noto Sans, sans-serif', // Change font family to Noto Sans
-    backgroundColor: '#fff',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    height: 'auto',
-    width: 'auto',
-    position: 'relative', // Make container relative for absolute positioning of the logo
-};
-
-const containerStyle1 = {
-    fontFamily: 'Noto Sans, sans-serif', // Change font family to Noto Sans
-    backgroundColor: '#fff',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginRight: '440px',
-    height: 'auto',
-    width: 'auto',
-    position: 'relative',
-    marginTop: '70px', // Make container relative for absolute positioning of the logo
-};
-
-const logoStyle = {
-    width: '50px',
-    height: '50px',
-    marginRight: '10px',
-    verticalAlign: 'middle',
-};
-
-const titleStyle = {
-    fontFamily: "'Noto Sans', sans-serif", // Change font family to Noto Sans
-    color: '#000',
-    // Adjust margin as needed // Ensure title is centered
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: '20px',
-};
-
-const titleStyle1 = {
-    fontFamily: "'Noto Sans', sans-serif", // Change font family to Noto Sans
-    color: '#000',
-    marginBottom: '50px',// Adjust margin as needed // Ensure title is centered
-    marginTop: '-10px',
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: '250px',
-};
-
-const titleStyle2 = {
-    fontFamily: "'Noto Sans', sans-serif", // Change font family to Noto Sans
-    color: '#555',
-    marginBottom: '50px',// Adjust margin as needed // Ensure title is centered
-    marginTop: '-25px',
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: '130px',
-};
-
-const formStyle = {
-    width: '500px', // Adjust the width as needed
-    height: 'auto',
-    display: 'flex', // Added for flexbox layout
-    flexDirection: 'column', // Keep elements in column
-};
-
-const inputStyle = {
-    width: '100%',
-    height: '50px',
-    padding: '10px',
-    marginBottom: '30px',
-    border: '1px solid #000',
-    borderRadius: '4px',
-    boxSizing: 'border-box',
-    fontFamily: "'Noto Sans', sans-serif", // Change font family to Noto Sans
-    fontWeight: 'regular',
-};
-
-const buttonContainerStyle = {
-    display: 'flex',
-    justifyContent: 'flex-end', // Align button to the right
-};
-
-const buttonStyle = {
-    height: '50px',
-    width: '120px',
-    padding: '10px 20px',
-    fontSize: '16px',
-    backgroundColor: '#000',
-    borderRadius: '25px',
-    color: '#fff',
-    border: 'none',
-    cursor: 'pointer',
-    alignItems: 'center',
-    marginTop: '100px',
-};
-
-const buttonHoverStyle = {
-    backgroundColor: '#555',
-};
-
 export default Register;
+
