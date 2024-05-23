@@ -38,7 +38,7 @@ const Sidebar = () => {
     return (
         <Container fluid>
             <Row>
-                <Col xs={12} md={3} style={{ backgroundColor: darkMode.value ? '#333' : '#fff', color: darkMode.value ? '#FFF' : 'black', paddingTop: '20px' }}>
+                <Col xs={12} md={3} style={{ backgroundColor: darkMode.value ? '#000' : '#fff', color: darkMode.value ? '#FFF' : 'black', paddingTop: '20px' }}>
                     <h2 style={headingStyle}>My Sidebar</h2>
                     <ul style={ulStyle}>
                         <li style={liStyle}>
