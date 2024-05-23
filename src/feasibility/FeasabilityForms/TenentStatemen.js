@@ -5,7 +5,7 @@ import useDarkMode from 'use-dark-mode';
 const FormContainer = styled.form`
     background-color: ${({ darkMode }) => (darkMode ? 'transparent' : 'transparent')};
     padding: 20px;
-    // box-shadow: ${({ darkMode }) => (darkMode ? '0 0 10px rgba(255, 255, 255, 0.2)' : '0 0 10px rgba(0, 0, 0, 0.1)')};
+    box-shadow: ${({ darkMode }) => (darkMode ? '0 0 10px rgba(255, 255, 255, 02)' : '0 0 5px rgba(0, 0, 0, 02)')};
     border-radius: 10px;
     margin: 20px auto;
 
@@ -19,6 +19,7 @@ const FormContainer = styled.form`
         box-sizing: border-box;
         background-color: ${({ darkMode }) => (darkMode ? '#000' : '#fff')};
         color: ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
+   
     }
 
     button {

@@ -18,9 +18,11 @@ const MainContainer = () => (
     </Row>
     <Row className="justify-content-center mt-5">
       <Col xs={12} className="text-center">
-        <h1 className="mb-3 display-1" style={{ color: "#000" }}>
-          Just Do it <span className="mx-5">|</span> Jordan
-        </h1>
+        <h3 className="mb-3 display-6" style={{ color: "#000" }}>
+          WHAT'S YOUR NEXT MOVE </h3>
+        <h4 className="mb-5" style={{ fontSize: "1.125rem", color: "#000" }}>
+          VIEW OUR FEATURED LISTINGS
+        </h4>
       </Col>
     </Row>
     <Row className="justify-content-center mt-5">

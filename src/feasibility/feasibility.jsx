@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../feasibility/Sidebar/Sidebar';
 import StepsComponent from '../Stepper/Stepper';
-import ProjectAreaCalculations from '../Pdf';
+import ProjectAreaCalculations from './Renderpdf/Pdf';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
 
@@ -21,7 +21,7 @@ const Feasibility = () => {
 
     const cardStyle = {
         backgroundColor: 'transparent',
-        border: `2px solid ${darkMode ? '#785623' : '#000'}`,
+        border: `2px solid ${darkMode.value ? '#fff' : '#000'}`,
     };
 
     const toggleSidebar = () => {
