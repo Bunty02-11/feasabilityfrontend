@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../feasibility/Sidebar/Sidebar';
 import StepsComponent from '../Stepper/Stepper';
@@ -10,6 +11,8 @@ const Feasibility = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [showSidebar, setShowSidebar] = useState(false); // State to manage sidebar visibility
     const darkMode = useDarkMode(); // Assume you have a hook or context that provides the dark mode state
+    const dispatch = useDispatch();
+    const { formData } = useSelector((state) => state.form);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -41,13 +44,11 @@ const Feasibility = () => {
                             <Sidebar />
                         </Card.Body>
                     </Card>
-
                 </Col>
                 {/* Main Content */}
                 <Col lg={6} md={6} sm={12} className="mb-4">
                     <Card style={cardStyle} className="h-100">
                         <Card.Body>
-
                             <StepsComponent activeStep={activeStep} />
                         </Card.Body>
                     </Card>
@@ -56,7 +57,7 @@ const Feasibility = () => {
                 <Col lg={4} md={3} sm={12} className="mb-4">
                     <Card style={cardStyle} className="h-100">
                         <Card.Body>
-                            <ProjectAreaCalculations />
+                            <ProjectAreaCalculations formData={formData} />
                         </Card.Body>
                     </Card>
                 </Col>

@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitForm, updateFormData, setActiveStep } from '../action/stepperAction'; // Adjust path as needed
 import useDarkMode from 'use-dark-mode';
 import styled from 'styled-components';
 import FormComponent from '../feasibility/FeasabilityForms/TenentStatemen';
 import FormComponent1 from '../feasibility/FeasabilityForms/AreaStatement1';
 import FormComponent2 from '../feasibility/FeasabilityForms/AreaStatement2';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 const Container = styled.div`
     display: flex;
@@ -61,7 +66,7 @@ const Circle = styled.div`
 const Line = styled.div`
     position: absolute;
     top: 15px;
-    width: 100px;
+    width: 80px;
     height: 2px;
     background-color: var(--text-color);
     z-index: 0;
@@ -100,44 +105,51 @@ const StyledButton = styled.button`
     }
 `;
 
-const StepsComponent = ({onSubmit}) => {
+const StepsComponent = () => {
     const darkMode = useDarkMode(false);
-    const [activeStep, setActiveStep] = useState(0);
-    const [formData, setFormData] = useState({
-        plotArea: '',
-        rgArea: '',
-        netArea: '',
-        tenementsRequired: '',
-        societyOffice: '',
-        amenities: '',
-        totalTenements: '',
-    });
+    const dispatch = useDispatch();
+    const { formData, activeStep } = useSelector((state) => state.form);
 
+    // Define steps
+    const steps = ['TENEMENT STATEMENT', 'AREA STATEMENT 1', 'AREA STATEMENT 2' , 'GENERATE PDF'];
+
+    // Define handleChange function
     const handleChange = (e, field) => {
         const { value } = e.target;
-        setFormData((prevData) => ({
-             ...prevData,
-              [field]: value }));
+        dispatch(updateFormData({ [field]: value }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        onSubmit(formData);
-        alert('Form submitted');
+    const handleSubmit = (formData) => {
+        dispatch(submitForm(formData));
     };
-
-    const steps = ['Tenant Statement', 'Area Statement 1', 'Area Statement 2', 'Generate PDF'];
 
     const handleNext = () => {
-        setActiveStep((prevStep) => Math.min(prevStep + 1, steps.length - 1));
+        dispatch(setActiveStep(activeStep + 1));
     };
 
     const handlePrevious = () => {
-        setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
+        dispatch(setActiveStep(activeStep - 1));
     };
 
     const handleGeneratePDF = () => {
-        alert('PDF Generated');
+        // Create a new jsPDF instance
+        const pdf = new jsPDF('p', 'mm', 'a4');
+    
+        // Capture the current page as an image using html2canvas
+        html2canvas(document.body).then((canvas) => {
+            // Convert canvas to image data URL
+            const imgData = canvas.toDataURL('image/png');
+    
+            // Calculate dimensions to fit the image on the PDF
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    
+            // Add the image to the PDF
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    
+            // Save the PDF
+            pdf.save('feasability.pdf');
+        });
     };
 
     return (

@@ -1,3 +1,4 @@
+import { TextField } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
 import useDarkMode from 'use-dark-mode';
@@ -10,16 +11,10 @@ const FormContainer = styled.form`
     margin: 20px auto;
 
     input {
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
-        border-radius: 5px;
-        width: 100%;
-        align: center;
-        box-sizing: border-box;
+        // border: 1px solid ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
+        // border-radius: 5px;
         background-color: ${({ darkMode }) => (darkMode ? '#000' : '#fff')};
         color: ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
-   
     }
 
     button {
@@ -45,66 +40,71 @@ const FormContainer = styled.form`
 `;
 
 const FormComponent = ({ formData, handleChange, handleSubmit }) => {
+    console.log(formData)
     const darkMode = useDarkMode(false); // Initialize darkMode state
 
     return (
         <FormContainer darkMode={darkMode.value} onSubmit={handleSubmit}>
             {/* <h2>Tenant Statement</h2> */}
-            <input
-                type="text"
-                name="plotArea"
-                placeholder="Area of the Plot*"
+            <TextField
+                id="plotArea"
+                label="Area of the Plot*"
+                variant="outlined"
                 value={formData.plotArea}
                 onChange={(e) => handleChange(e, 'plotArea')}
                 required
+                fullWidth
+                margin="normal"
             />
-            <input
-                type="text"
-                name="rgArea"
-                placeholder="Less: RG Area*"
+            <TextField
+                id="rgArea"
+                label="Less: RG Area*"
+                variant="outlined"
                 value={formData.rgArea}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, 'rgArea')}
                 required
+                fullWidth
+                margin="normal"
             />
-            <input
-                type="text"
-                name="netArea"
-                placeholder="Net Area*"
-                value={formData.netArea}
-                onChange={handleChange}
+            <TextField
+                id="road_setbackArea"
+                label="Less:- Road set back area*"
+                variant="outlined"
+                value={formData.road_setbackArea}
+                onChange={(e) => handleChange(e, 'road_setbackArea')}
                 required
+                fullWidth
+                margin="normal"
             />
-            <input
-                type="text"
-                name="tenementsRequired"
-                placeholder="Nos. of tenements required as per density (650/Hectare)*"
+            <TextField
+                id="Other_Reservation"
+                label="Less: Other Reservations*"
+                variant="outlined"
+                value={formData.Other_Reservation}
+                onChange={(e) => handleChange(e, 'Other_Reservation')}
+                required
+                fullWidth
+                margin="normal"
+            />
+            <TextField
+                id="tenementsRequired"
+                label="Nos. of tenemenets Required as per density (650/Hectare)*"
+                variant="outlined"
                 value={formData.tenementsRequired}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, 'tenementsRequired')}
                 required
+                fullWidth
+                margin="normal"
             />
-            <input
-                type="text"
-                name="societyOffice"
-                placeholder="Nos. of society office required*"
-                value={formData.societyOffice}
-                onChange={handleChange}
+            <TextField
+                id="Road Width"
+                label="Road Width*"
+                variant="outlined"
+                value={formData.road_Width}
+                onChange={(e) => handleChange(e, 'Other_Reservation')}
                 required
-            />
-            <input
-                type="text"
-                name="amenities"
-                placeholder="Balwadi, Welfare + 2 other Amenity*"
-                value={formData.amenities}
-                onChange={handleChange}
-                required
-            />
-            <input
-                type="text"
-                name="totalTenements"
-                placeholder="Total Required Tenements & Amenity*"
-                value={formData.totalTenements}
-                onChange={handleChange}
-                required
+                fullWidth
+                margin="normal"
             />
         </FormContainer>
     );

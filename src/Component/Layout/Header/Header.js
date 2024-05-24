@@ -1,15 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import useDarkMode from 'use-dark-mode';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 
+const Toggle = ({ checked, onChange }) => {
+    return (
+        <label style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', color: checked ? '#ffffff' : '#000000' }}>
+            <input type="checkbox" checked={checked} onChange={onChange} style={{ display: 'none' }} />
+            <span style={{ margin: '0 8px' , fontSize: '25px' }}>{checked ? '🌚' : '🌞'}</span>
+        </label>
+    );
+};
+
 const Header = () => {
     const [isPagesHovering, setIsPagesHovering] = useState(false);
     const [isOtherHovering, setIsOtherHovering] = useState(false);
 
     const darkMode = useDarkMode(false);
+
+    useEffect(() => {
+        if (darkMode.value) {
+            document.body.style.backgroundColor = '#000000';
+            document.body.style.color = '#ffffff';
+        } else {
+            document.body.style.backgroundColor = '#ffffff';
+            document.body.style.color = '#000000';
+        }
+    }, [darkMode.value]);
 
     const pages = ["Login", "Register", "Form"];
     const otherItems = ["Pie", "Charts", "Graphs"];
@@ -47,20 +66,22 @@ const Header = () => {
         top: '100%',
         left: '50%',
         transform: 'translateX(-50%)',
-        backgroundColor: darkMode.value ? '#000' : '#fff',
+        backgroundColor: darkMode.value ? '#fff' : '#000',
         boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
         listStyle: 'none',
         padding: '10px 0',
         margin: 0,
         display: 'none',
+        zIndex: 1,
     };
 
     const dropdownItemStyle = {
         padding: '10px 20px',
-        color: darkMode.value ? '#fff' : '#000',
+        color: darkMode.value ? '#000' : '#fff',
         textDecoration: 'none',
         display: 'block',
         textAlign: 'center',
+        zIndex: 1,
     };
 
     const inputStyle = {
@@ -171,10 +192,7 @@ const Header = () => {
                         </nav>
                     </Col>
                     <Col xs={12} md={4} className="d-flex justify-content-center justify-content-md-end align-items-center mt-3 mt-md-0">
-                        <div style={{ position: 'relative', marginRight: '10px' }}>
-                            <input type="text" placeholder="Search..." style={inputStyle} />
-                            <FontAwesomeIcon icon={faSearch} style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)', color: darkMode.value ? '#000' : '#fff' }} />
-                        </div>
+                        <Toggle checked={darkMode.value} onChange={darkMode.toggle} />
                         <Link to="/login" className="mx-2">
                             <button
                                 style={buttonStyle}
@@ -185,8 +203,8 @@ const Header = () => {
                                 Login
                             </button>
                         </Link>
-                        <div style={lineStyle}></div>
-                        <Link to="/register" className="mx-2">
+                        {/* <div style={lineStyle}></div> */}
+                        {/* <Link to="/register" className="mx-2">
                             <button
                                 style={buttonStyle}
                                 onMouseEnter={(e) => e.target.style.backgroundColor = buttonHoverStyle.backgroundColor}
@@ -195,7 +213,7 @@ const Header = () => {
                                 <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} />
                                 Join Us
                             </button>
-                        </Link>
+                        </Link> */}
                     </Col>
                 </Row>
             </Container>

@@ -1,11 +1,13 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Card, Carousel } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
 
 const MainContainer = () => (
   <Container className="mt-5">
     <Row className="justify-content-center mt-5">
       <Col
-        xs={12}
+        xs={8}
         md={12}
         className="bg-cover bg-center"
         style={{
@@ -19,45 +21,120 @@ const MainContainer = () => (
     <Row className="justify-content-center mt-5">
       <Col xs={12} className="text-center">
         <h3 className="mb-3 display-6" style={{ color: "#000" }}>
-          WHAT'S YOUR NEXT MOVE </h3>
+          WHAT'S YOUR NEXT MOVE
+        </h3>
         <h4 className="mb-5" style={{ fontSize: "1.125rem", color: "#000" }}>
           VIEW OUR FEATURED LISTINGS
         </h4>
       </Col>
     </Row>
-    <Row className="justify-content-center mt-5">
-      <Col
-        xs={12}
-        className="bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url(https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg)",
-          padding: "50% 0",
-          backgroundSize: "cover",
-        }}
-      ></Col>
-    </Row>
-    <Row className="justify-content-center mt-5">
-      <Col xs={12} className="text-center">
-        <h1 className="mb-3 display-1" style={{ color: "#000" }}>
-          Just Do it <span className="mx-5">|</span> Jordan
-        </h1>
-        <h4 className="mb-5" style={{ fontSize: "1.125rem", color: "#000" }}>
-          Get ready to feel the responsive energy return of air zoom and all new
-          reactX foam
-        </h4>
-      </Col>
-    </Row>
+    <Carousel>
+      <Carousel.Item>
+        <Row className="justify-content-center mt-2">
+          <Col xs={12} md={10} lg={10} className="d-flex justify-content-center">
+            <Card className="bg-secondary text-white p-4" style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
+              <Row className="no-gutters">
+                <Col md={8}>
+                  <Card.Body>
+                    <div className="display-2 text-warning mb-4">“</div>
+                    <Card.Text>
+                    Sanjay Balraj Dutt (born 29 July 1959)[4] is an Indian actor who works in Hindi cinema in addition to a few Kannada, Tamil, Punjabi and Telugu films.[5][6] In a career spanning over four decades, Dutt has won several accolades and acted in over 135 films. Sanjay Balraj Dutt (born 29 July 1959)[4] is an Indian actor who works in Hindi cinema in addition to a few Kannada, Tamil, Punjabi and Telugu films.[5][6] In a career spanning over four decades, Dutt has won several accolades and acted in over 135 films.
+                    </Card.Text>
+                    <div className="font-weight-bold">
+                      Sanjay Dutt
+                      <div className="text-muted">Indian actor | Alpha Men</div>
+                    </div>
+                  </Card.Body>
+                </Col>
+                <Col md={4} className="d-flex align-items-center justify-content-center">
+                  <img src="https://res.cloudinary.com/drevcfxu5/image/upload/v1716542002/next4_fszo7t.jpg" className="img-fluid rounded" alt="Alex Nguyen" style={{ borderRadius: '10px', width: '350px' }} />
+                </Col>
+              </Row>
+            </Card>
+          </Col>
+        </Row>
+      </Carousel.Item>
+      <Carousel.Item>
+        <Row className="justify-content-center mt-2">
+          <Col xs={12} md={10} lg={10} className="d-flex justify-content-center">
+            <Card className="bg-secondary text-white p-4" style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
+              <Row className="no-gutters">
+                <Col md={8}>
+                  <Card.Body>
+                    <div className="display-2 text-warning mb-4">“</div>
+                    <Card.Text>
+                    Vishwanath Patekar (born 1 January 1951), better known as Nana Patekar, is an Indian actor, screenwriter, film maker, and a former Indian Territorial Army officer, mainly working in Hindi and Marathi cinema. He is regarded as one of the finest and influential actors in Indian Cinema, Patekar is recipient of three National Film Awards, four Filmfare Awards and two Filmfare Awards Marathi for his acting performances. He was bestowed with the Padma Shri award in 2013 for his contribution in cinema and arts. 
+                    </Card.Text>
+                    <div className="font-weight-bold">
+                    Nana Patekar
+                      <div className="text-muted">Indian actor |  screenwriter</div>
+                    </div>
+                  </Card.Body>
+                </Col>
+                <Col md={4} className="d-flex align-items-center justify-content-center">
+                  <img src="https://via.placeholder.com/150" className="img-fluid rounded" alt="Alex Nguyen" style={{ borderRadius: '10px', width: '250px' }} />
+                </Col>
+              </Row>
+            </Card>
+          </Col>
+        </Row>
+      </Carousel.Item>
+      <Carousel.Item>
+        <Row className="justify-content-center mt-2">
+          <Col xs={12} md={10} lg={10} className="d-flex justify-content-center">
+            <Card className="bg-secondary text-white p-4" style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
+              <Row className="no-gutters">
+                <Col md={8}>
+                  <Card.Body>
+                    <div className="display-2 text-warning mb-4">“</div>
+                    <Card.Text>
+                    aikishan Kakubhai Shroff[1] (born 1 February 1957), known by his screen name Jackie Shroff, is an Indian actor and former model from Mumbai, Maharashtra; who primarily works in Hindi film industry. In a career spanning over four decades, he has appeared in over 220 films in 13 languages.[n 1][2][3] He has received several accolades including four Filmfare Awards. Shroff established himself as one of the leading actors of Indian cinema of the 1980s and the 1990s.
+                    </Card.Text>
+                    <div className="font-weight-bold">
+                      Jackie Shroff
+                      <div className="text-muted">Indian actor |  former model</div>
+                    </div>
+                  </Card.Body>
+                </Col>
+                <Col md={4} className="d-flex align-items-center justify-content-center">
+                  <img src="https://via.placeholder.com/150" className="img-fluid rounded" alt="Alex Nguyen" style={{ borderRadius: '10px', width: '250px' }} />
+                </Col>
+              </Row>
+            </Card>
+          </Col>
+        </Row>
+      </Carousel.Item>
+    </Carousel>
   </Container>
 );
 
-
-
 const Main = () => {
+  const darkMode = useDarkMode(false); // Initialize darkMode state
+
   return (
     <>
       <MainContainer />
-      {/* <Footer /> */}
+      <style>
+        {`
+          /* Custom CSS to change button color based on theme mode */
+          .carousel-control-prev,
+          .carousel-control-next {
+            background-color: ${darkMode.value ? "transparent" : "transparent"};
+            border: 1px solid ${darkMode.value ? "#fff" : "#000"};
+            color: ${darkMode.value ? "white" : "black"};
+            width: 20px;
+            height: 200px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+
+          /* Custom CSS to change arrow color based on theme mode */
+          .carousel-control-prev-icon,
+          .carousel-control-next-icon {
+            filter: invert(${darkMode.value ? "0%" : "100%"});
+          }
+        `}
+      </style>
     </>
   );
 };

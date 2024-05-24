@@ -1,8 +1,6 @@
 import React from 'react';
 import Main from './Component/Home/Main';
-import DarkMode from './Darkmode/Darkmode';
 import { ThemeProvider } from './Darkmode/ThemeContext';
-import StepFormContainer from './feasibility/Call/StepFormContainer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   HashRouter,
@@ -12,7 +10,6 @@ import {
 } from "react-router-dom";
 import LoginForm from './Component/Signin/Login';
 import Register from './Component/Register/Register';
-import Sidebar from './feasibility/Sidebar/Sidebar';
 import Header from './Component/Layout/Header/Header';
 import { Container, Row, Col } from 'react-bootstrap';
 import Footer from './Component/Layout/Footer/Footer';
@@ -26,7 +23,7 @@ function AppContent() {
 
   return (
     <ThemeProvider>
-      <DarkMode />
+      {/* <DarkMode /> */}
       <Header />
       <Container fluid>
         

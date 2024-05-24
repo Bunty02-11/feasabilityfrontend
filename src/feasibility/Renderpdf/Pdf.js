@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
 
-const ProjectAreaCalculations = ({formData}) => {
-    console.log(formData)
+const ProjectAreaCalculations = ({ formData }) => {
 
     const darkMode = useDarkMode(false); // Initialize darkMode state
 
@@ -52,6 +51,13 @@ const ProjectAreaCalculations = ({formData}) => {
         marginTop: '10px',
     };
 
+    useEffect(() => {
+        // Calculate the net area
+        const netArea = formData.plotArea - formData.rgArea - formData.road_setbackArea - formData.Other_Reservation;
+        // Store the net area in local storage
+        localStorage.setItem("netArea", netArea.toString());
+    }, [formData]); // Run this effect whenever formData changes
+
     return (
         <div style={containerStyle}>
             <h3 style={headingStyle}>
@@ -77,45 +83,50 @@ const ProjectAreaCalculations = ({formData}) => {
                     <tr>
                         <td style={thTdStyle}>1</td>
                         <td style={thTdStyle}>Area of the Plot</td>
-                        <td style={thTdStyle}>{6.473}</td>
+                        <td style={thTdStyle}>{formData.plotArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>2</td>
                         <td style={thTdStyle}>Less: RG area</td>
-                        <td style={thTdStyle}>0.00</td>
+                        <td style={thTdStyle}>{formData.rgArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>3</td>
                         <td style={thTdStyle}>Less: Road set back area</td>
-                        <td style={thTdStyle}>81.97</td>
+                        <td style={thTdStyle}>{formData.road_setbackArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>4</td>
-                        <td style={thTdStyle}>Net Area</td>
-                        <td style={thTdStyle}>552.73</td>
+                        <td style={thTdStyle}>Less: Other Reservations</td>
+                        <td style={thTdStyle}>{formData.Other_Reservation}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>5</td>
-                        <td style={thTdStyle}>Nos. of tenements Required as per density (650/Hectare)</td>
-                        <td style={thTdStyle}>36.00</td>
+                        <td style={thTdStyle}>Net Area</td>
+                        <td style={thTdStyle}>{localStorage.getItem("netArea")}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>6</td>
-                        <td style={thTdStyle}>No. of existing tenements</td>
-                        <td style={thTdStyle}>17.00</td>
+                        <td style={thTdStyle}>Nos. of tenements Required as per density (650/Hectare)</td>
+                        <td style={thTdStyle}>{('netArea')*0.065}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>7</td>
+                        <td style={thTdStyle}>No. of existing tenements</td>
+                        <td style={thTdStyle}>{formData.tenementsRequired}</td>
+                    </tr>
+                    <tr>
+                        <td style={thTdStyle}>8</td>
                         <td style={thTdStyle}>Nos. of society office Required</td>
                         <td style={thTdStyle}>1</td>
                     </tr>
                     <tr>
-                        <td style={thTdStyle}>8</td>
+                        <td style={thTdStyle}>9</td>
                         <td style={thTdStyle}>Balwadi, Welfare + 2 other Amenity</td>
                         <td style={thTdStyle}>4</td>
                     </tr>
                     <tr>
-                        <td style={thTdStyle}>9</td>
+                        <td style={thTdStyle}>10</td>
                         <td style={thTdStyle}>Total Required Tenements & Amenity (4 + 5 + 6)</td>
                         <td style={thTdStyle}>41.00</td>
                     </tr>

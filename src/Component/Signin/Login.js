@@ -16,15 +16,6 @@ const LoginForm = () => {
         <Container>
             <Row>
                 <Col md={{ span: 6, offset: 3 }}>
-                    <img
-                        src={'https://masterbundles.com/wp-content/uploads/2022/03/1-nike-logo-design-%E2%80%93-history-meaning-and-evolution.png'}
-                        alt="Logo"
-                        style={{ width: '50px', height: '50px', marginRight: '10px' }}
-                    />
-                </Col>
-            </Row>
-            <Row>
-                <Col md={{ span: 6, offset: 3 }}>
                     <h1 className="text-center">Enter your email to join us or sign in.</h1>
                     <h3 className="text-center">India</h3>
                     <Form onSubmit={handleSubmit} className="mb-5">
