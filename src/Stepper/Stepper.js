@@ -1,14 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitForm, updateFormData, setActiveStep } from '../action/stepperAction'; // Adjust path as needed
+import { submitForm, updateFormData, setActiveStep, generatePDF } from '../action/stepperAction'; // Adjust path as needed
 import useDarkMode from 'use-dark-mode';
 import styled from 'styled-components';
 import FormComponent from '../feasibility/FeasabilityForms/TenentStatemen';
 import FormComponent1 from '../feasibility/FeasabilityForms/AreaStatement1';
 import FormComponent2 from '../feasibility/FeasabilityForms/AreaStatement2';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-
 
 const Container = styled.div`
     display: flex;
@@ -132,24 +129,7 @@ const StepsComponent = () => {
     };
 
     const handleGeneratePDF = () => {
-        // Create a new jsPDF instance
-        const pdf = new jsPDF('p', 'mm', 'a4');
-    
-        // Capture the current page as an image using html2canvas
-        html2canvas(document.body).then((canvas) => {
-            // Convert canvas to image data URL
-            const imgData = canvas.toDataURL('image/png');
-    
-            // Calculate dimensions to fit the image on the PDF
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    
-            // Add the image to the PDF
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    
-            // Save the PDF
-            pdf.save('feasability.pdf');
-        });
+        dispatch(generatePDF());
     };
 
     return (
@@ -196,7 +176,7 @@ const StepsComponent = () => {
                         Next
                     </StyledButton>
                 ) : (
-                    <StyledButton onClick={handleGeneratePDF}>
+                    <StyledButton oncl >
                         Generate PDF
                     </StyledButton>
                 )}

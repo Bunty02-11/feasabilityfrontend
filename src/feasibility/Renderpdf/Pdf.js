@@ -1,21 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
 
 const ProjectAreaCalculations = ({ formData }) => {
-
     const darkMode = useDarkMode(false); // Initialize darkMode state
+
+    const [netArea, setNetArea] = useState(0);
+    const [societyOffice, setSocietyOffice] = useState(0);
+    const [amenities, setAmenities] = useState(0);
+    const [totalTenements, setTotalTenements] = useState(0);
+    const [tenement_perDensity, setTenement_perDensity] = useState(0);
 
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
-        backgroundColor: darkMode.value ? 'transparent' : 'transparent', // Toggle background color for dark mode
+        backgroundColor: darkMode.value ? '#000' : '#fff', // Toggle background color for dark mode
         color: darkMode.value ? '#fff' : '#000', // Toggle text color for dark mode
+        padding: '20px',
+        borderRadius: '8px',
     };
 
     const headingStyle = {
         textAlign: 'center',
         fontSize: '1.2em',
         marginBottom: '20px',
-        backgroundColor: darkMode.value ? 'transparent' : 'transparent', // Toggle background color for dark mode
         color: darkMode.value ? '#fff' : '#000', // Toggle text color for dark mode
     };
 
@@ -26,20 +32,17 @@ const ProjectAreaCalculations = ({ formData }) => {
     };
 
     const thTdStyle = {
-        border: '1px solid #000',
+        border: `2px solid ${darkMode.value ? '#fff' : '#000'}`,
         padding: '8px',
         textAlign: 'left',
         fontSize: '10px',
-        border: '1px solid'
     };
 
     const thStyle = {
         ...thTdStyle,
-        backgroundColor: '#f2f2f2',
+        backgroundColor: darkMode.value ? '#444' : '#f2f2f2',
         textAlign: 'center',
         fontSize: '12px',
-        backgroundColor: darkMode.value ? 'transparent' : '', // Toggle background color for dark mode
-        color: darkMode.value ? '#fff' : '#000', // Toggle text color for dark mode
     };
 
     const highlightStyle = {
@@ -52,14 +55,51 @@ const ProjectAreaCalculations = ({ formData }) => {
     };
 
     useEffect(() => {
-        // Calculate the net area
-        const netArea = formData.plotArea - formData.rgArea - formData.road_setbackArea - formData.Other_Reservation;
-        // Store the net area in local storage
-        localStorage.setItem("netArea", netArea.toString());
-    }, [formData]); // Run this effect whenever formData changes
+        const netAreaValue = formData.plotArea - formData.rgArea - formData.road_setbackArea - formData.Other_Reservation;
+        localStorage.setItem("netArea", netAreaValue.toString());
+        setNetArea(netAreaValue);
+        console.log(netArea)
+    }, [formData]);
+
+    useEffect(() => {
+        const tenement_perDensityValue = netArea * 0.065;
+        // console.log(tenement_perDensity)
+        localStorage.setItem("tenement_perDensity", tenement_perDensityValue.toString());
+        setTenement_perDensity(tenement_perDensityValue);
+    }, [formData]);
+
+    useEffect(() => {
+        let societyOfficeValue = 1;
+        if (formData.tenementsRequired > 100) {
+            societyOfficeValue = Math.ceil(formData.tenementsRequired / 100);
+        }
+        localStorage.setItem("societyOffice", societyOfficeValue.toString());
+        setSocietyOffice(societyOfficeValue);
+    }, [formData]);
+
+    useEffect(() => {
+        let amenitiesValues = 4;
+        if (formData.tenementsRequired > 250) {
+            amenitiesValues = Math.ceil(formData.tenementsRequired / 62.5);
+        }
+        localStorage.setItem("amenities", amenitiesValues.toString());
+        setAmenities(amenitiesValues);
+    }, [formData]);
+
+    useEffect(() => {
+        if (formData.tenementsRequired && tenement_perDensity && amenities && societyOffice) {
+            const tenementsRequiredValue = parseFloat(formData.tenementsRequired);
+            const totalTenementsValue = tenementsRequiredValue > tenement_perDensity
+                ? tenementsRequiredValue + amenities + societyOffice
+                : amenities + societyOffice + tenement_perDensity;
+
+            localStorage.setItem("totalTenements", totalTenementsValue.toString());
+            setTotalTenements(totalTenementsValue);
+        }
+    }, [formData, tenement_perDensity, amenities, societyOffice]);
 
     return (
-        <div style={containerStyle}>
+        <div className="pdf" style={containerStyle}>
             <h3 style={headingStyle}>
                 Project Area Calculations of CTS No. 2547 & 2548 of Village Eksar in R/C Ward, Borivali, Mumbai
             </h3>
@@ -103,12 +143,12 @@ const ProjectAreaCalculations = ({ formData }) => {
                     <tr>
                         <td style={thTdStyle}>5</td>
                         <td style={thTdStyle}>Net Area</td>
-                        <td style={thTdStyle}>{localStorage.getItem("netArea")}</td>
+                        <td style={thTdStyle}>{netArea.toFixed(2)}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>6</td>
                         <td style={thTdStyle}>Nos. of tenements Required as per density (650/Hectare)</td>
-                        <td style={thTdStyle}>{('netArea')*0.065}</td>
+                        <td style={thTdStyle}>{tenement_perDensity.toFixed(0)}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>7</td>
@@ -118,17 +158,17 @@ const ProjectAreaCalculations = ({ formData }) => {
                     <tr>
                         <td style={thTdStyle}>8</td>
                         <td style={thTdStyle}>Nos. of society office Required</td>
-                        <td style={thTdStyle}>1</td>
+                        <td style={thTdStyle}>{societyOffice}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>9</td>
                         <td style={thTdStyle}>Balwadi, Welfare + 2 other Amenity</td>
-                        <td style={thTdStyle}>4</td>
+                        <td style={thTdStyle}>{amenities}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>10</td>
-                        <td style={thTdStyle}>Total Required Tenements & Amenity (4 + 5 + 6)</td>
-                        <td style={thTdStyle}>41.00</td>
+                        <td style={thTdStyle}>Total Required Tenements & Amenity</td>
+                        <td style={thTdStyle}>{totalTenements.toFixed(0)}</td>
                     </tr>
                 </tbody>
             </table>

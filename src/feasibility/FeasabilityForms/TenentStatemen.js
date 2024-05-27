@@ -11,8 +11,6 @@ const FormContainer = styled.form`
     margin: 20px auto;
 
     input {
-        // border: 1px solid ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
-        // border-radius: 5px;
         background-color: ${({ darkMode }) => (darkMode ? '#000' : '#fff')};
         color: ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
     }
@@ -20,7 +18,7 @@ const FormContainer = styled.form`
     button {
         padding: 10px;
         margin: 10px 0;
-        border: 1px solid ${({ darkMode }) => (darkMode ? '#000' : '#555')};
+        border: 1px solid ${({ darkMode }) => (darkMode ? '#fff' : '#555')};
         border-radius: 5px;
         background-color: ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
         color: ${({ darkMode }) => (darkMode ? '#000' : '#fff')};
@@ -39,72 +37,89 @@ const FormContainer = styled.form`
     }
 `;
 
+const StyledTextField = styled(TextField)`
+    & .MuiInputBase-root {
+        background-color: ${({ darkMode }) => (darkMode ? '#333' : '#fff')};
+        color: ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
+    }
+    & .MuiOutlinedInput-notchedOutline {
+        border-color: ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
+    }
+    & .MuiInputLabel-root {
+        color: ${({ darkMode }) => (darkMode ? '#fff' : '#000')};
+    }
+`;
+
 const FormComponent = ({ formData, handleChange, handleSubmit }) => {
-    console.log(formData)
     const darkMode = useDarkMode(false); // Initialize darkMode state
 
     return (
         <FormContainer darkMode={darkMode.value} onSubmit={handleSubmit}>
-            {/* <h2>Tenant Statement</h2> */}
-            <TextField
+            <StyledTextField
                 id="plotArea"
-                label="Area of the Plot*"
+                label="Area of the Plot"
                 variant="outlined"
                 value={formData.plotArea}
                 onChange={(e) => handleChange(e, 'plotArea')}
                 required
                 fullWidth
                 margin="normal"
+                darkMode={darkMode.value}
             />
-            <TextField
+            <StyledTextField
                 id="rgArea"
-                label="Less: RG Area*"
+                label="Less: RG Area"
                 variant="outlined"
                 value={formData.rgArea}
                 onChange={(e) => handleChange(e, 'rgArea')}
                 required
                 fullWidth
                 margin="normal"
+                darkMode={darkMode.value}
             />
-            <TextField
+            <StyledTextField
                 id="road_setbackArea"
-                label="Less:- Road set back area*"
+                label="Less:- Road set back area"
                 variant="outlined"
                 value={formData.road_setbackArea}
                 onChange={(e) => handleChange(e, 'road_setbackArea')}
                 required
                 fullWidth
                 margin="normal"
+                darkMode={darkMode.value}
             />
-            <TextField
+            <StyledTextField
                 id="Other_Reservation"
-                label="Less: Other Reservations*"
+                label="Less: Other Reservations"
                 variant="outlined"
                 value={formData.Other_Reservation}
                 onChange={(e) => handleChange(e, 'Other_Reservation')}
                 required
                 fullWidth
                 margin="normal"
+                darkMode={darkMode.value}
             />
-            <TextField
+            <StyledTextField
                 id="tenementsRequired"
-                label="Nos. of tenemenets Required as per density (650/Hectare)*"
+                label="Nos. of existing tenements"
                 variant="outlined"
                 value={formData.tenementsRequired}
                 onChange={(e) => handleChange(e, 'tenementsRequired')}
                 required
                 fullWidth
                 margin="normal"
+                darkMode={darkMode.value}
             />
-            <TextField
-                id="Road Width"
-                label="Road Width*"
+            <StyledTextField
+                id="road_Width"
+                label="Road Width"
                 variant="outlined"
                 value={formData.road_Width}
-                onChange={(e) => handleChange(e, 'Other_Reservation')}
+                onChange={(e) => handleChange(e, 'road_Width')}
                 required
                 fullWidth
                 margin="normal"
+                darkMode={darkMode.value}
             />
         </FormContainer>
     );

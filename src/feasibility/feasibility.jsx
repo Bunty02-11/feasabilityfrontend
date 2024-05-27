@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useRef, useEffect  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+// import { generatePDF } from '../action/stepperAction';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf'; // Adjust path as needed
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../feasibility/Sidebar/Sidebar';
 import StepsComponent from '../Stepper/Stepper';
@@ -12,6 +15,8 @@ const Feasibility = () => {
     const [showSidebar, setShowSidebar] = useState(false); // State to manage sidebar visibility
     const darkMode = useDarkMode(); // Assume you have a hook or context that provides the dark mode state
     const dispatch = useDispatch();
+    const projectAreaRef = useRef(null);
+
     const { formData } = useSelector((state) => state.form);
 
     const handleNext = () => {
@@ -30,6 +35,10 @@ const Feasibility = () => {
     const toggleSidebar = () => {
         setShowSidebar(!showSidebar);
     };
+
+    // const handleGeneratePDF = () => {
+    //     dispatch(generatePDF());
+    // };
 
     return (
         <Container fluid className="py-3">
@@ -57,7 +66,8 @@ const Feasibility = () => {
                 <Col lg={4} md={3} sm={12} className="mb-4">
                     <Card style={cardStyle} className="h-100">
                         <Card.Body>
-                            <ProjectAreaCalculations formData={formData} />
+                            <ProjectAreaCalculations formData={formData}  ref={projectAreaRef} />
+                            {/* <Button variant="primary" onClick={handleGeneratePDF}>Generate PDF</Button> */}
                         </Card.Body>
                     </Card>
                 </Col>
