@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitForm, updateFormData, setActiveStep, generatePDF } from '../action/stepperAction'; // Adjust path as needed
+import { submitForm, updateFormData, setActiveStep } from '../action/stepperAction'; // Adjust path as needed
 import useDarkMode from 'use-dark-mode';
 import styled from 'styled-components';
 import FormComponent from '../feasibility/FeasabilityForms/TenentStatemen';
 import FormComponent1 from '../feasibility/FeasabilityForms/AreaStatement1';
 import FormComponent2 from '../feasibility/FeasabilityForms/AreaStatement2';
+import html2pdf from 'html2pdf.js'; // Import html2pdf
 
 const Container = styled.div`
     display: flex;
@@ -107,6 +108,15 @@ const StepsComponent = () => {
     const dispatch = useDispatch();
     const { formData, activeStep } = useSelector((state) => state.form);
 
+    const handleDownloadPDF = () => {
+        const element = document.getElementById('pdf-container');
+        const pdfOptions = {
+            filename: 'fesability33(10).pdf', // Optional, default is 'file.pdf'
+            jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' }, // Set A3 size
+        };
+        html2pdf().set(pdfOptions).from(element).save();
+    };
+
     // Define steps
     const steps = ['TENEMENT STATEMENT', 'AREA STATEMENT 1', 'AREA STATEMENT 2' , 'GENERATE PDF'];
 
@@ -128,9 +138,6 @@ const StepsComponent = () => {
         dispatch(setActiveStep(activeStep - 1));
     };
 
-    const handleGeneratePDF = () => {
-        dispatch(generatePDF());
-    };
 
     return (
         <Container className={darkMode.value ? 'dark' : 'light'}>
@@ -176,7 +183,7 @@ const StepsComponent = () => {
                         Next
                     </StyledButton>
                 ) : (
-                    <StyledButton onClick={handleGeneratePDF} >
+                    <StyledButton onClick={handleDownloadPDF} >
                         Generate PDF
                     </StyledButton>
                 )}

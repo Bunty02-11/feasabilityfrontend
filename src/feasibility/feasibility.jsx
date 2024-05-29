@@ -10,6 +10,7 @@ import ProjectAreaCalculations from './Renderpdf/Pdf';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
 
+
 const Feasibility = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [showSidebar, setShowSidebar] = useState(false); // State to manage sidebar visibility
@@ -36,9 +37,7 @@ const Feasibility = () => {
         setShowSidebar(!showSidebar);
     };
 
-    // const handleGeneratePDF = () => {
-    //     dispatch(generatePDF());
-    // };
+
 
     return (
         <Container fluid className="py-3">
@@ -67,8 +66,9 @@ const Feasibility = () => {
                     <Card style={cardStyle} className="h-100">
                         <Card.Body>
                             <ProjectAreaCalculations formData={formData}  ref={projectAreaRef} />
-                            {/* <Button variant="primary" onClick={handleGeneratePDF}>Generate PDF</Button> */}
+                            
                         </Card.Body>
+                        {/* <Button variant="primary" onClick={handleDownloadPDF}>Generate PDF</Button> */}
                     </Card>
                 </Col>
             </Row>
