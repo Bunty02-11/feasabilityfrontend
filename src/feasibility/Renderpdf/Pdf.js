@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
 
 const ProjectAreaCalculations = ({ formData }) => {
@@ -9,6 +10,13 @@ const ProjectAreaCalculations = ({ formData }) => {
     const [amenities, setAmenities] = useState(0);
     const [totalTenements, setTotalTenements] = useState(0);
     const [tenement_perDensity, setTenement_perDensity] = useState(0);
+    const [totalArea_FSI, setTotalArea_FSI] = useState(0);
+    const [fsi, setFsi] = useState(0);
+    const [rehabFsi, setRehabFsi] = useState(0);
+    const [rehabComponent, setRehabComponent] = useState(0);
+    const [totalSale, setTotalSale] = useState(0);
+    const [fungible, setFungible] = useState(0);
+    const [totalArea_includingFungible, setTotalArea_includingFungible] = useState(0);
 
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
@@ -55,51 +63,93 @@ const ProjectAreaCalculations = ({ formData }) => {
     };
 
     useEffect(() => {
-        const netAreaValue = formData.plotArea - formData.rgArea - formData.road_setbackArea - formData.Other_Reservation;
+        const plotArea = parseFloat(formData.plotArea) || 0;
+        const rgArea = parseFloat(formData.rgArea) || 0;
+        const roadSetbackArea = parseFloat(formData.less_road_setbackArea) || 0;
+        const otherReservation = parseFloat(formData.Other_Reservation) || 0;
+        const tenementsRequired = parseFloat(formData.tenementsRequired) || 0;
+        const roadWidth = parseFloat(formData.roadWidth) || 0;
+
+        const netAreaValue = plotArea - rgArea - roadSetbackArea - otherReservation;
         localStorage.setItem("netArea", netAreaValue.toString());
         setNetArea(netAreaValue);
-        console.log(netArea)
-    }, [formData]);
 
-    useEffect(() => {
-        const tenement_perDensityValue = netArea * 0.065;
-        // console.log(tenement_perDensity)
+        const tenement_perDensityValue = netAreaValue * 0.065;
         localStorage.setItem("tenement_perDensity", tenement_perDensityValue.toString());
         setTenement_perDensity(tenement_perDensityValue);
-    }, [formData]);
 
-    useEffect(() => {
         let societyOfficeValue = 1;
-        if (formData.tenementsRequired > 100) {
-            societyOfficeValue = Math.ceil(formData.tenementsRequired / 100);
+        if (tenementsRequired > 100) {
+            societyOfficeValue = Math.ceil(tenementsRequired / 100);
         }
         localStorage.setItem("societyOffice", societyOfficeValue.toString());
         setSocietyOffice(societyOfficeValue);
-    }, [formData]);
 
-    useEffect(() => {
         let amenitiesValues = 4;
-        if (formData.tenementsRequired > 250) {
-            amenitiesValues = Math.ceil(formData.tenementsRequired / 62.5);
+        if (tenementsRequired > 250) {
+            amenitiesValues = Math.ceil(tenementsRequired / 62.5);
         }
         localStorage.setItem("amenities", amenitiesValues.toString());
         setAmenities(amenitiesValues);
-    }, [formData]);
 
-    useEffect(() => {
-        if (formData.tenementsRequired && tenement_perDensity && amenities && societyOffice) {
-            const tenementsRequiredValue = parseFloat(formData.tenementsRequired);
-            const totalTenementsValue = tenementsRequiredValue > tenement_perDensity
-                ? tenementsRequiredValue + amenities + societyOffice
-                : amenities + societyOffice + tenement_perDensity;
+        if (tenementsRequired && tenement_perDensityValue && amenitiesValues && societyOfficeValue) {
+            const totalTenementsValue = tenementsRequired > tenement_perDensityValue
+                ? tenementsRequired + amenitiesValues + societyOfficeValue
+                : amenitiesValues + societyOfficeValue + tenement_perDensityValue;
 
             localStorage.setItem("totalTenements", totalTenementsValue.toString());
             setTotalTenements(totalTenementsValue);
         }
-    }, [formData, tenement_perDensity, amenities, societyOffice]);
 
+        if (!isNaN(netAreaValue) && !isNaN(roadSetbackArea)) {
+            const totalArea_FSIValue = netAreaValue + roadSetbackArea;
+            localStorage.setItem("totalArea_FSI", totalArea_FSIValue.toString());
+            setTotalArea_FSI(totalArea_FSIValue);
+        } else {
+            console.error("Invalid input: netArea or less_road_setbackArea is not a number.");
+        }
+
+        let fsiValue;
+        if (roadWidth >= 0 && roadWidth <= 12.9) {
+            fsiValue = 3;
+        } else if (roadWidth > 12.9) {
+            fsiValue = 4;
+        } else {
+            console.error("Invalid road width");
+        }
+        localStorage.setItem("fsi", fsiValue.toString());
+        setFsi(fsiValue);
+
+        if (tenementsRequired && tenement_perDensityValue) {
+            const roundedDensityValue = Math.round(tenement_perDensityValue);
+            const rehabFsiValue = tenementsRequired > roundedDensityValue
+                ? Math.round(tenementsRequired * 33.45)
+                : roundedDensityValue * 33.45;
+
+            localStorage.setItem("rehabFsi", rehabFsiValue.toString());
+            setRehabFsi(rehabFsiValue);
+        }
+
+        const roundedTotalTenements = Math.round(totalTenements);
+        const rehabComponentValue = roundedTotalTenements * 50;
+        localStorage.setItem("rehabComponent", rehabComponentValue.toString());
+        setRehabComponent(rehabComponentValue);
+
+        const totalSaleValue = rehabComponent * 1.15;
+        localStorage.setItem("totalSale", totalSaleValue.toString());
+        setTotalSale(totalSaleValue);
+
+        const fungibleValue = totalSale * 0.35;
+        localStorage.setItem("fungible", fungibleValue.toString());
+        setFungible(fungibleValue);
+
+        const totalArea_includingFungibleValue = totalSale + fungible;
+        localStorage.setItem("totalArea_includingFungible", totalArea_includingFungibleValue.toString());
+        setTotalArea_includingFungible(totalArea_includingFungibleValue);
+
+    }, [formData]);
     return (
-        <div className="pdf" style={containerStyle}>
+        <div style={containerStyle}>
             <h3 style={headingStyle}>
                 Project Area Calculations of CTS No. 2547 & 2548 of Village Eksar in R/C Ward, Borivali, Mumbai
             </h3>
@@ -127,55 +177,55 @@ const ProjectAreaCalculations = ({ formData }) => {
                     </tr>
                     <tr>
                         <td style={thTdStyle}>2</td>
-                        <td style={thTdStyle}>Less: RG area</td>
+                        <td style={thTdStyle}>Recreation Ground</td>
                         <td style={thTdStyle}>{formData.rgArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>3</td>
-                        <td style={thTdStyle}>Less: Road set back area</td>
-                        <td style={thTdStyle}>{formData.road_setbackArea}</td>
+                        <td style={thTdStyle}>Less Road Setback Area</td>
+                        <td style={thTdStyle}>{formData.less_road_setbackArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>4</td>
-                        <td style={thTdStyle}>Less: Other Reservations</td>
+                        <td style={thTdStyle}>Other Reservation</td>
                         <td style={thTdStyle}>{formData.Other_Reservation}</td>
                     </tr>
-                    <tr>
+                    <tr style={highlightStyle}>
                         <td style={thTdStyle}>5</td>
                         <td style={thTdStyle}>Net Area</td>
-                        <td style={thTdStyle}>{netArea.toFixed(2)}</td>
+                        <td style={thTdStyle}>{netArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>6</td>
-                        <td style={thTdStyle}>Nos. of tenements Required as per density (650/Hectare)</td>
-                        <td style={thTdStyle}>{tenement_perDensity.toFixed(0)}</td>
+                        <td style={thTdStyle}>Tenements permissible as per density (650 Ten/sq.km)</td>
+                        <td style={thTdStyle}>{tenement_perDensity}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>7</td>
-                        <td style={thTdStyle}>No. of existing tenements</td>
+                        <td style={thTdStyle}>Tenements Required</td>
                         <td style={thTdStyle}>{formData.tenementsRequired}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>8</td>
-                        <td style={thTdStyle}>Nos. of society office Required</td>
+                        <td style={thTdStyle}>Society Office</td>
                         <td style={thTdStyle}>{societyOffice}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>9</td>
-                        <td style={thTdStyle}>Balwadi, Welfare + 2 other Amenity</td>
+                        <td style={thTdStyle}>Amenities</td>
                         <td style={thTdStyle}>{amenities}</td>
                     </tr>
-                    <tr>
+                    <tr style={highlightStyle}>
                         <td style={thTdStyle}>10</td>
-                        <td style={thTdStyle}>Total Required Tenements & Amenity</td>
-                        <td style={thTdStyle}>{totalTenements.toFixed(0)}</td>
+                        <td style={thTdStyle}>Total Tenements</td>
+                        <td style={thTdStyle}>{totalTenements}</td>
                     </tr>
                 </tbody>
             </table>
             <table style={tableStyle}>
                 <thead>
                     <tr>
-                        <th colSpan="3" style={thStyle}>AREA STATEMENT</th>
+                        <th colSpan="3" style={thStyle}>FSI STATEMENT</th>
                     </tr>
                     <tr>
                         <th style={thStyle}>Sr No</th>
@@ -186,87 +236,53 @@ const ProjectAreaCalculations = ({ formData }) => {
                 <tbody>
                     <tr>
                         <td style={thTdStyle}>1</td>
-                        <td style={thTdStyle}>Area of the Plot</td>
-                        <td style={thTdStyle}>634.70</td>
+                        <td style={thTdStyle}>Net Area</td>
+                        <td style={thTdStyle}>{netArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>2</td>
-                        <td style={thTdStyle}>Less: Road set back area</td>
-                        <td style={thTdStyle}>81.97</td>
+                        <td style={thTdStyle}>Less Road Setback Area</td>
+                        <td style={thTdStyle}>{formData.less_road_setbackArea}</td>
                     </tr>
-                    <tr>
+                    <tr style={highlightStyle}>
                         <td style={thTdStyle}>3</td>
-                        <td style={thTdStyle}>Net Area</td>
-                        <td style={thTdStyle}>552.73</td>
+                        <td style={thTdStyle}>Total Area for FSI</td>
+                        <td style={thTdStyle}>{totalArea_FSI}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>4</td>
-                        <td style={thTdStyle}>Add: Road set back area</td>
-                        <td style={thTdStyle}>81.97</td>
+                        <td style={thTdStyle}>FSI</td>
+                        <td style={thTdStyle}>{fsi}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>5</td>
-                        <td style={thTdStyle}>Total Area for F.S.I.</td>
-                        <td style={thTdStyle}>634.70</td>
+                        <td style={thTdStyle}>Total Construction Area (Rehab FSI)</td>
+                        <td style={thTdStyle}>{rehabFsi}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>6</td>
-                        <td style={thTdStyle}>F.S.I. Permissible</td>
-                        <td style={thTdStyle}>4.00</td>
+                        <td style={thTdStyle}>Rehab Component (50 sq.m per tenement)</td>
+                        <td style={thTdStyle}>{rehabComponent}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>7</td>
-                        <td style={thTdStyle}>Permissible Floor Area</td>
-                        <td style={thTdStyle}>2538.80</td>
+                        <td style={thTdStyle}>Sale Component (15%)</td>
+                        <td style={thTdStyle}>{totalSale}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>8</td>
-                        <td style={thTdStyle}>Rehab F.S.I. (36 X 33.45)</td>
-                        <td style={thTdStyle}>1204.20</td>
+                        <td style={thTdStyle}>Fungible</td>
+                        <td style={thTdStyle}>{fungible}</td>
                     </tr>
-                    <tr>
+                    <tr style={highlightStyle}>
                         <td style={thTdStyle}>9</td>
-                        <td style={{ ...thTdStyle, ...highlightStyle }}>Rehab Component (41 X 45.00)</td>
-                        <td style={{ ...thTdStyle, ...highlightStyle }}>1845.00</td>
-                    </tr>
-                    <tr>
-                        <td style={thTdStyle}>10</td>
-                        <td style={thTdStyle}>Sale Component</td>
-                        <td style={thTdStyle}></td>
-                    </tr>
-                    <tr>
-                        <td style={thTdStyle}>11</td>
-                        <td style={thTdStyle}>Total Sale F.S.I. (1845 X 1.10)</td>
-                        <td style={thTdStyle}>2029.50</td>
-                    </tr>
-                    <tr>
-                        <td style={thTdStyle}>12</td>
-                        <td style={thTdStyle}>Add: 35% Fugible Area</td>
-                        <td style={thTdStyle}>710.33</td>
-                    </tr>
-                    <tr>
-                        <td style={thTdStyle}>13</td>
-                        <td style={thTdStyle}>Total sale area including 35% fungible</td>
-                        <td style={thTdStyle}>2739.83</td>
-                    </tr>
-                    <tr>
-                        <td style={thTdStyle}>14</td>
-                        <td style={{ ...thTdStyle, ...highlightStyle }}>Rehab Construction area</td>
-                        <td style={{ ...thTdStyle, ...highlightStyle }}>2767.50</td>
-                    </tr>
-                    <tr>
-                        <td style={thTdStyle}>15</td>
-                        <td style={{ ...thTdStyle, ...highlightStyle }}>Sale Construction area</td>
-                        <td style={{ ...thTdStyle, ...highlightStyle }}>4109.74</td>
+                        <td style={thTdStyle}>Total Area including fungible</td>
+                        <td style={thTdStyle}>{totalArea_includingFungible}</td>
                     </tr>
                 </tbody>
             </table>
             <div style={noteStyle}>
-                <p>Note:</p>
-                <p>1) Above feasibility report is subject to approval from SRA.</p>
-                <p>2) There is 13.40 W DP Road</p>
-                <p>3) Scheme is prepared as per Reg. 33(10)</p>
-                <p>4) Plot area mentioned is subject to demarcation of site.</p>
+                Note: All calculations are based on the data provided and may vary based on actual measurements and changes in regulations.
             </div>
         </div>
     );

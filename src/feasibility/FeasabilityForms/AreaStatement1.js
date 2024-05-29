@@ -67,17 +67,6 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="rgArea"
-                label="Less: RG Area"
-                variant="outlined"
-                value={formData.rgArea}
-                onChange={(e) => handleChange(e, 'rgArea')}
-                required
-                fullWidth
-                margin="normal"
-                darkMode={darkMode.value}
-            />
-            <StyledTextField
                 id="road_setbackArea"
                 label="Less:- Road set back area"
                 variant="outlined"
@@ -89,8 +78,19 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="Other_Reservation"
-                label="Less: Other Reservations"
+                id="road_setbackArea"
+                label="Net Area"
+                variant="outlined"
+                value={formData.road_setbackArea}
+                onChange={(e) => handleChange(e, 'road_setbackArea')}
+                required
+                fullWidth
+                margin="normal"
+                darkMode={darkMode.value}
+            />
+            <StyledTextField
+                id="Add:- Road set back area"
+                label=""
                 variant="outlined"
                 value={formData.Other_Reservation}
                 onChange={(e) => handleChange(e, 'Other_Reservation')}
@@ -100,7 +100,7 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="tenementsRequired"
+                id="Total  Area for F.S.I."
                 label="Nos. of existing tenements"
                 variant="outlined"
                 value={formData.tenementsRequired}
@@ -112,7 +112,7 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
             />
             <StyledTextField
                 id="road_Width"
-                label="Road Width"
+                label="F.S.I. Permissible"
                 variant="outlined"
                 value={formData.road_Width}
                 onChange={(e) => handleChange(e, 'road_Width')}

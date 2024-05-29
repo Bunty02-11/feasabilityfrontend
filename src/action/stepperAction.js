@@ -1,5 +1,7 @@
 // formSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import React from 'react';
+import { useReactToPrint } from 'react-to-print';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -7,15 +9,17 @@ const initialState = {
   formData: {
     plotArea: '',
     rgArea: '',
-    road_setbackArea: '',
+    less_road_setbackArea: '',
     Other_Reservation: '',
     tenementsRequired: '',
     societyOffice: '',
     amenities: '',
     totalTenements: '',
-    road_Width: '',
+    roadWidth: '',
     tenement_perDensity: '',
     netArea: '',
+    rehabFsi: '',
+    rehabComponent: '',
   },
   activeStep: 0,
   pdfGenerated: false,
@@ -34,20 +38,30 @@ export const submitForm = createAsyncThunk(
   }
 );
 
-export const generatePDF = createAsyncThunk(
-  'form/generatePDF',
+export const generatePDF  = createAsyncThunk(
+  'pdf/downloadPDF',
   async (_, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
-      const { formData } = state.form;
+      const { formData } = state.form; // Assuming you need formData
+
+      // Create a jsPDF instance
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const canvas = await html2canvas(document.ref);
+
+      // Use html2canvas to convert the document body to a canvas
+      const canvas = await html2canvas(document.body);
+
+      // Get the image data from the canvas
       const imgData = canvas.toDataURL('image/png');
+
+      // Calculate PDF dimensions
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      
 
+      // Add the image to the PDF
+      pdf.addImage(imgData, 'PNG', 10, -10, pdfWidth, pdfHeight);
+
+      // Save the PDF
       pdf.save('feasability.pdf');
 
       return true;
@@ -56,6 +70,7 @@ export const generatePDF = createAsyncThunk(
     }
   }
 );
+
 
 const formSlice = createSlice({
   name: 'form',

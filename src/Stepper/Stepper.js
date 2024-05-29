@@ -176,7 +176,7 @@ const StepsComponent = () => {
                         Next
                     </StyledButton>
                 ) : (
-                    <StyledButton oncl >
+                    <StyledButton onClick={handleGeneratePDF} >
                         Generate PDF
                     </StyledButton>
                 )}

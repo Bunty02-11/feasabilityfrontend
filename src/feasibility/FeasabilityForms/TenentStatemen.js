@@ -78,11 +78,11 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="road_setbackArea"
+                id="less_road_setbackArea"
                 label="Less:- Road set back area"
                 variant="outlined"
-                value={formData.road_setbackArea}
-                onChange={(e) => handleChange(e, 'road_setbackArea')}
+                value={formData.less_road_setbackArea}
+                onChange={(e) => handleChange(e, 'less_road_setbackArea')}
                 required
                 fullWidth
                 margin="normal"
@@ -111,11 +111,11 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="road_Width"
+                id="roadWidth"
                 label="Road Width"
                 variant="outlined"
-                value={formData.road_Width}
-                onChange={(e) => handleChange(e, 'road_Width')}
+                value={formData.roadWidth}
+                onChange={(e) => handleChange(e, 'roadWidth')}
                 required
                 fullWidth
                 margin="normal"
