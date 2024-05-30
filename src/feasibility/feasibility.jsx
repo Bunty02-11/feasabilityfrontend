@@ -1,15 +1,14 @@
-import React, { useState,useRef, useEffect  } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { generatePDF } from '../action/stepperAction';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf'; // Adjust path as needed
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../feasibility/Sidebar/Sidebar';
 import StepsComponent from '../Stepper/Stepper';
 import ProjectAreaCalculations from './Renderpdf/Pdf';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
-
+import Pdf2 from './Renderpdf/Pdf2';
+import Draggable from 'react-draggable';
+import { Resizable, ResizableBox } from 'react-resizable';
 
 const Feasibility = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -37,8 +36,6 @@ const Feasibility = () => {
         setShowSidebar(!showSidebar);
     };
 
-
-
     return (
         <Container fluid className="py-3">
             <Row>
@@ -46,13 +43,18 @@ const Feasibility = () => {
                     {showSidebar ? 'Close Menu' : 'Open Menu'}
                 </Button>
                 {/* Sidebar */}
-                <Col lg={2} md={3} sm={12} className={`mb-4 ${showSidebar ? 'd-block' : 'd-none d-md-block'}`}>
-                    <Card style={cardStyle} className="h-100">
-                        <Card.Body>
-                            <Sidebar />
-                        </Card.Body>
-                    </Card>
-                </Col>
+                <Resizable>
+
+                    <Col lg={2} md={3} sm={12} className={`mb-4 ${showSidebar ? 'd-block' : 'd-none d-md-block'}`}>
+                        <Card style={ cardStyle} className="h-100">
+                            <Card.Body>
+                                <Sidebar />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+
+                </Resizable>
+
                 {/* Main Content */}
                 <Col lg={6} md={6} sm={12} className="mb-4">
                     <Card style={cardStyle} className="h-100">
@@ -61,16 +63,17 @@ const Feasibility = () => {
                         </Card.Body>
                     </Card>
                 </Col>
+
                 {/* Project Area Calculations */}
                 <Col lg={4} md={3} sm={12} className="mb-4">
                     <Card style={cardStyle} className="h-100">
                         <Card.Body>
-                            <ProjectAreaCalculations formData={formData}  ref={projectAreaRef} />
-                            
+                            < ProjectAreaCalculations formData={formData} ref={projectAreaRef} />
                         </Card.Body>
                         {/* <Button variant="primary" onClick={handleDownloadPDF}>Generate PDF</Button> */}
                     </Card>
                 </Col>
+
             </Row>
         </Container>
     );

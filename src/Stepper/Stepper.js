@@ -61,14 +61,7 @@ const Circle = styled.div`
     }
 `;
 
-const Line = styled.div`
-    position: absolute;
-    top: 15px;
-    width: 80px;
-    height: 2px;
-    background-color: var(--text-color);
-    z-index: 0;
-`;
+
 
 const StepLabel = styled.div`
     margin-top: 10px;
@@ -110,15 +103,30 @@ const StepsComponent = () => {
 
     const handleDownloadPDF = () => {
         const element = document.getElementById('pdf-container');
+
+
+        const originalMode = darkMode.value;
+        if (originalMode) {
+            darkMode.disable();
+        }
+
         const pdfOptions = {
             filename: 'fesability33(10).pdf', // Optional, default is 'file.pdf'
             jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' }, // Set A3 size
+            html2canvas: {
+                scale: 4,
+                useCORS: true,
+            },
+            image: { type: 'pdf', quality: 3.0 }, // Set image quality to maximum (1.0 instead of 10)
         };
+
         html2pdf().set(pdfOptions).from(element).save();
     };
 
+
+
     // Define steps
-    const steps = ['TENEMENT STATEMENT', 'AREA STATEMENT 1', 'AREA STATEMENT 2' , 'GENERATE PDF'];
+    const steps = ['TENEMENT STATEMENT', 'Fesability', 'GENERATE PDF'];
 
     // Define handleChange function
     const handleChange = (e, field) => {
@@ -146,7 +154,7 @@ const StepsComponent = () => {
                     <StepContainer key={step}>
                         <Circle className={activeStep === step ? 'active' : ''}>{step + 1}</Circle>
                         <StepLabel className={activeStep === step ? 'active' : ''}>{stepLabel}</StepLabel>
-                        {step < steps.length - 1 && <Line />}
+                        {step < steps.length - 1}
                     </StepContainer>
                 ))}
             </StepperContainer>
@@ -158,20 +166,20 @@ const StepsComponent = () => {
                         handleSubmit={handleSubmit}
                     />
                 )}
-                {activeStep === 1 && (
+                 {activeStep === 1 && (
                     <FormComponent1
                         formData={formData}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                     />
                 )}
-                {activeStep === 2 && (
+                {/* {activeStep === 2 && (
                     <FormComponent2
                         formData={formData}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                     />
-                )}
+                )}  */}
             </div>
 
             <ButtonContainer>

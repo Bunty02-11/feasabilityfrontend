@@ -9,7 +9,7 @@ const Toggle = ({ checked, onChange }) => {
     return (
         <label style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', color: checked ? '#ffffff' : '#000000' }}>
             <input type="checkbox" checked={checked} onChange={onChange} style={{ display: 'none' }} />
-            <span style={{ margin: '0 8px' , fontSize: '25px' }}>{checked ? '🌚' : '🌞'}</span>
+            <span style={{ margin: '0 8px', fontSize: '25px' }}>{checked ? '🌚' : '🌞'}</span>
         </label>
     );
 };
@@ -30,7 +30,12 @@ const Header = () => {
         }
     }, [darkMode.value]);
 
-    const pages = ["Login", "Register", "Form"];
+    const pages = [
+        { name: "Login", link: "/login" },
+        { name: "Register", link: "/register" },
+        { name: "Feasibility", link: "/feasibility" },
+        { name: "Table", link: "/table" }
+    ];
     const otherItems = ["Pie", "Charts", "Graphs"];
 
     const headerStyle = {
@@ -138,7 +143,6 @@ const Header = () => {
                                     onMouseLeave={() => setIsPagesHovering(false)}
                                 >
                                     <a
-                                        href="#pages"
                                         style={linkStyle}
                                         onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
                                         onMouseLeave={(e) => e.target.style.color = linkStyle.color}
@@ -149,7 +153,7 @@ const Header = () => {
                                         <ul style={{ ...dropdownMenuStyle, display: 'block' }}>
                                             {pages.map((page, index) => (
                                                 <li key={index}>
-                                                    <a href="#pages" style={dropdownItemStyle}>{page}</a>
+                                                    <Link to={page.link} style={dropdownItemStyle}>{page.name}</Link>
                                                 </li>
                                             ))}
                                         </ul>
@@ -203,17 +207,6 @@ const Header = () => {
                                 Login
                             </button>
                         </Link>
-                        {/* <div style={lineStyle}></div> */}
-                        {/* <Link to="/register" className="mx-2">
-                            <button
-                                style={buttonStyle}
-                                onMouseEnter={(e) => e.target.style.backgroundColor = buttonHoverStyle.backgroundColor}
-                                onMouseLeave={(e) => e.target.style.backgroundColor = buttonStyle.backgroundColor}
-                            >
-                                <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: '5px' }} />
-                                Join Us
-                            </button>
-                        </Link> */}
                     </Col>
                 </Row>
             </Container>

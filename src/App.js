@@ -14,6 +14,7 @@ import Header from './Component/Layout/Header/Header';
 import { Container, Row, Col } from 'react-bootstrap';
 import Footer from './Component/Layout/Footer/Footer';
 import Feasibility from './feasibility/feasibility';
+import Pdf2 from './feasibility/Renderpdf/Pdf2';
 
 function AppContent() {
   // const location = useLocation();
@@ -32,6 +33,7 @@ function AppContent() {
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<Register />} />
               <Route path="/feasibility" element={<Feasibility />} />
+              <Route path="/table" element={<Pdf2/>} />
             </Routes>
         <Footer />
       </Container>

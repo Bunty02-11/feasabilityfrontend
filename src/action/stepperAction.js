@@ -7,6 +7,7 @@ import html2canvas from 'html2canvas';
 
 const initialState = {
   formData: {
+    plotName: '',
     plotArea: '',
     rgArea: '',
     less_road_setbackArea: '',

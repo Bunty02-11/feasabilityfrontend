@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
-import html2pdf from 'html2pdf.js'; // Import html2pdf
 
 const ProjectAreaCalculations = ({ formData }) => {
     const darkMode = useDarkMode(false); // Initialize darkMode state
@@ -14,10 +13,10 @@ const ProjectAreaCalculations = ({ formData }) => {
     const [fsi, setFsi] = useState(0);
     const [rehabFsi, setRehabFsi] = useState(0);
     const [rehabComponent, setRehabComponent] = useState(0);
-    const [ totalSale, setTotalSlae] = useState(0);
-    const [ fungible, setFungible] = useState(0);
-    const [ totalArea_includingFungible, setTotalArea_includingFungible] = useState(0);
-    
+    const [totalSale, setTotalSlae] = useState(0);
+    const [fungible, setFungible] = useState(0);
+    const [totalArea_includingFungible, setTotalArea_includingFungible] = useState(0);
+
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
         backgroundColor: darkMode.value ? '#000' : '#fff',
@@ -32,7 +31,9 @@ const ProjectAreaCalculations = ({ formData }) => {
         fontSize: '1.2em',
         marginBottom: '20px',
         color: darkMode.value ? '#fff' : '#000', // Toggle text color for dark mode
+        fontWeight: 'bold', // Make text bold
     };
+    
 
     const tableStyle = {
         width: '100%',
@@ -70,20 +71,18 @@ const ProjectAreaCalculations = ({ formData }) => {
         const otherReservation = parseFloat(formData.Other_Reservation) || 0;
         const tenementsRequired = parseFloat(formData.tenementsRequired) || 0;
         const roadWidth = parseFloat(formData.roadWidth) || 0;
-        //
 
+        // Calculate netAreaValue
         const netAreaValue = plotArea - rgArea - roadSetbackArea - otherReservation;
         localStorage.setItem("netArea", netAreaValue.toString());
         setNetArea(netAreaValue);
 
-        //
-
+        // Calculate tenement_perDensityValue
         const tenement_perDensityValue = netAreaValue * 0.065;
         localStorage.setItem("tenement_perDensity", tenement_perDensityValue.toString());
         setTenement_perDensity(tenement_perDensityValue);
 
-        //
-
+        // Calculate societyOfficeValue
         let societyOfficeValue = 1;
         if (tenementsRequired > 100) {
             societyOfficeValue = Math.ceil(tenementsRequired / 100);
@@ -91,8 +90,7 @@ const ProjectAreaCalculations = ({ formData }) => {
         localStorage.setItem("societyOffice", societyOfficeValue.toString());
         setSocietyOffice(societyOfficeValue);
 
-        //
-
+        // Calculate amenitiesValues
         let amenitiesValues = 4;
         if (tenementsRequired > 250) {
             amenitiesValues = Math.ceil(tenementsRequired / 62.5);
@@ -100,30 +98,23 @@ const ProjectAreaCalculations = ({ formData }) => {
         localStorage.setItem("amenities", amenitiesValues.toString());
         setAmenities(amenitiesValues);
 
-        //
-
-        if (tenementsRequired && tenement_perDensityValue && amenitiesValues && societyOfficeValue) {
-            const totalTenementsValue = tenementsRequired > tenement_perDensityValue
-                ? tenementsRequired + amenitiesValues + societyOfficeValue
-                : amenitiesValues + societyOfficeValue + tenement_perDensityValue;
-
-            localStorage.setItem("totalTenements", totalTenementsValue.toString());
-            console.log(totalTenements)
-            setTotalTenements(totalTenementsValue);
-        }
-
-        //
-
-        if (!isNaN(netAreaValue) && !isNaN(roadSetbackArea)) {
-            const totalArea_FSIValue = netAreaValue + roadSetbackArea;
-            localStorage.setItem("totalArea_FSI", totalArea_FSIValue.toString());
-            setTotalArea_FSI(totalArea_FSIValue);
+        // Calculate totalTenementsValue
+        let totalTenementsValue;
+        if (tenementsRequired > tenement_perDensityValue) {
+            totalTenementsValue = tenementsRequired + amenitiesValues + societyOfficeValue;
         } else {
-            console.error("Invalid input: netArea or less_road_setbackArea is not a number.");
+            totalTenementsValue = amenitiesValues + societyOfficeValue + tenement_perDensityValue;
         }
+        localStorage.setItem("totalTenements", totalTenementsValue.toString());
+        setTotalTenements(totalTenementsValue);
 
-        //
 
+        // Calculate totalArea_FSIValue
+        const totalArea_FSIValue = netAreaValue + roadSetbackArea;
+        localStorage.setItem("totalArea_FSI", totalArea_FSIValue.toString());
+        setTotalArea_FSI(totalArea_FSIValue);
+
+        // Calculate fsiValue
         let fsiValue;
         if (roadWidth >= 0 && roadWidth <= 12.9) {
             fsiValue = 3;
@@ -136,43 +127,36 @@ const ProjectAreaCalculations = ({ formData }) => {
         setFsi(fsiValue);
 
         //
-        if (tenementsRequired && tenement_perDensityValue) {
-            // Round tenement_perDensityValue to the nearest whole number
-            const roundedDensityValue = Math.round(tenement_perDensityValue);
-
-            const rehabFsiValue = tenementsRequired > roundedDensityValue
-                ? Math.round(tenementsRequired * 33.45)
-                : roundedDensityValue * 33.45;
-
-            localStorage.setItem("rehabFsi", rehabFsiValue.toString());
-            console.log(Math.round(roundedDensityValue * 33.45), roundedDensityValue);
-            setRehabFsi(rehabFsiValue);
-        }
+        // Calculate rehabFsiValue
+        const roundedDensityValue = Math.round(tenement_perDensityValue);
+        const rehabFsiValue = tenementsRequired > roundedDensityValue
+            ? Math.round(tenementsRequired * 33.45)
+            : roundedDensityValue * 33.45;
+        localStorage.setItem("rehabFsi", rehabFsiValue.toString());
+        setRehabFsi(rehabFsiValue);
 
         //
 
-        const roundedTotalTenements = Math.round(totalTenements);
+        // Calculate rehabComponentValue
+        const roundedTotalTenements = Math.round(totalTenementsValue);
         const rehabComponentValue = roundedTotalTenements * 50;
         localStorage.setItem("rehabComponent", rehabComponentValue.toString());
         setRehabComponent(rehabComponentValue);
 
-        const totalSaleValue = rehabComponent * 1.15;
+        // Calculate totalSaleValue
+        const totalSaleValue = rehabComponentValue * 1.15;
         localStorage.setItem("totalSale", totalSaleValue.toString());
-        console.log(totalSaleValue)
-        setTotalSlae(totalSaleValue)
-        //
-        
-        const fungibleValue = totalSale * 0.35;
+        setTotalSlae(totalSaleValue);
+
+        // Calculate fungibleValue
+        const fungibleValue = totalSaleValue * 0.35;
         localStorage.setItem("fungible", fungibleValue.toString());
-        console.log(fungibleValue)
-        setFungible(fungibleValue)
+        setFungible(fungibleValue);
 
-        //
-
-        const totalArea_includingFungibleValue = totalSale + fungible;
+        // Calculate totalArea_includingFungibleValue
+        const totalArea_includingFungibleValue = totalSaleValue + fungibleValue;
         localStorage.setItem("totalArea_includingFungible", totalArea_includingFungibleValue.toString());
-        console.log(totalArea_includingFungibleValue)
-        setTotalArea_includingFungible(totalArea_includingFungibleValue)
+        setTotalArea_includingFungible(totalArea_includingFungibleValue);
 
 
     }, [formData]);
@@ -181,9 +165,7 @@ const ProjectAreaCalculations = ({ formData }) => {
 
     return (
         <div id="pdf-container" className="pdf" style={containerStyle}>
-            <h3 style={headingStyle}>
-                Project Area Calculations of CTS No. 2547 & 2548 of Village Eksar in R/C Ward, Borivali, Mumbai
-            </h3>
+            <h3 style={headingStyle}>{formData.plotName}</h3>
             <table style={tableStyle}>
                 <thead>
                     <tr>
