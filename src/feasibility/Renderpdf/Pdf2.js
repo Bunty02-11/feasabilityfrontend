@@ -1,8 +1,10 @@
 import React from 'react'
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
+import useFormDataCalculations from './Calculation';
 
-function Pdf2() {
+function Pdf2({ formData }) {
     const darkMode = useDarkMode(false); // Initialize darkMode state
+    const { netArea, tenement_perDensity,  societyOffice, amenities, totalTenements, totalArea_FSI, fsi, rehabFsi, rehabComponent, totalSale, fungible, totalArea_includingFungible, rehabConstructionArea, saleConstructionArea  } = useFormDataCalculations(formData);
 
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
@@ -51,15 +53,15 @@ function Pdf2() {
                         <th style={thTdStyle}></th>
                         <th style={thTdStyle}></th>
                         <th style={thTdStyle}></th>
-                        <th style={thTdStyle}>23150.00</th>
-                        <th style={thTdStyle}>35940.38</th>
+                        <th style={thTdStyle}>{ rehabComponent}</th>
+                        <th style={thTdStyle}>{ totalArea_includingFungible}</th>
                     </tr>
                     <tr>
                         <th style={thStyle}>Sr No</th>
                         <th style={thStyle}>Details</th>
                         <th style={thStyle}>Particulars</th>
                         <th style={thStyle}>Rehab</th>
-                        <th style={thStyle}>PTC</th>
+                        <th style={thStyle}>Sale</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,8 +76,8 @@ function Pdf2() {
                         <td style={thTdStyle}>a</td>
                         <td style={thTdStyle}>construction area of buildings</td>
                         <td style={thTdStyle}></td>
-                        <td style={thTdStyle} rowSpan={'2'}>32410.00</td>
-                        <td style={thTdStyle} rowSpan={'2'}>53910.56</td>
+                        <td style={thTdStyle} rowSpan={'2'}>{(rehabConstructionArea).toFixed(2)}</td>
+                        <td style={thTdStyle} rowSpan={'2'}>{(saleConstructionArea).toFixed()}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>b</td>
@@ -86,8 +88,8 @@ function Pdf2() {
                         <td style={thTdStyle}></td>
                         <td style={thTdStyle}>Area of construction in sft </td>
                         <td style={thTdStyle}></td>
-                        <td style={thTdStyle}>348861.24</td>
-                        <td style={thTdStyle}>580293.29</td>
+                        <td style={thTdStyle}>{(rehabConstructionArea * 10.764).toFixed(2)}</td>
+                        <td style={thTdStyle}>{(saleConstructionArea * 10.764).toFixed()}</td>
                     </tr>
                     <tr style={highlightStyle}>
                         <td style={thTdStyle}>2</td>
@@ -100,15 +102,15 @@ function Pdf2() {
                         <td style={thTdStyle}>a</td>
                         <td style={thTdStyle}>Construction cost</td>
                         <td style={thTdStyle}>RS. 3500 Rs per sft</td>
-                        <td style={thTdStyle}>122.10</td>
-                        <td style={thTdStyle}>203.10</td>
+                        <td style={thTdStyle}>Input</td>
+                        <td style={thTdStyle}>Input</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>b</td>
                         <td style={thTdStyle}>infrastructure cost</td>
                         <td style={thTdStyle}>for Rehab Rs. 50 Rs per sft and for PTC 50 RS per sft.</td>
-                        <td style={thTdStyle}>1.74</td>
-                        <td style={thTdStyle}>2.90</td>
+                        <td style={thTdStyle}>Input</td>
+                        <td style={thTdStyle}>Input</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>c</td>

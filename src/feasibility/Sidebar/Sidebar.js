@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   return (
     <div style={sidebarStyle}>
-      <h2>Sanjay Dutt</h2>
+      <h2>Test</h2>
       <ul className="nav flex-column">
         <li className="nav-item">
           <a className="nav-link active" style={linkStyle}>

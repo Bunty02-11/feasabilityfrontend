@@ -21,6 +21,7 @@ const initialState = {
     netArea: '',
     rehabFsi: '',
     rehabComponent: '',
+    landRate: '',
   },
   activeStep: 0,
   pdfGenerated: false,

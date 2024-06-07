@@ -133,6 +133,17 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 margin="normal"
                 darkMode={darkMode.value}
             />
+            <StyledTextField
+                id="landRate"
+                label="Land Rate"
+                variant="outlined"
+                value={formData.landRate}
+                onChange={(e) => handleChange(e, 'landRate')}
+                required
+                fullWidth
+                margin="normal"
+                darkMode={darkMode.value}
+            />
         </FormContainer>
     );
 };

@@ -34,7 +34,7 @@ const Header = () => {
         { name: "Login", link: "/login" },
         { name: "Register", link: "/register" },
         { name: "Feasibility", link: "/feasibility" },
-        { name: "Table", link: "/table" }
+        { name: "Table", link: "/table" },
     ];
     const otherItems = ["Pie", "Charts", "Graphs"];
 
