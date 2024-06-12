@@ -17,7 +17,7 @@ const Footer = () => {
 
     return (
         <footer style={footerStyle}>
-            <p>&copy; 2024 Nike, Inc. All Rights Reserved</p>
+            <p>&copy; 2024 BZ Tech, Inc. All Rights Reserved</p>
         </footer>
     );
 }

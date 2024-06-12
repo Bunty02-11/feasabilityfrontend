@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../feasibility/Sidebar/Sidebar';
 import StepsComponent from '../Stepper/Stepper';
@@ -10,11 +10,12 @@ import { ResizableBox } from 'react-resizable';
 import 'react-resizable/css/styles.css'; // Import styles for react-resizable
 import Pdf2 from './Renderpdf/Pdf2';
 
+
+
 const Feasibility = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [showSidebar, setShowSidebar] = useState(true); // Show sidebar by default
     const darkMode = useDarkMode();
-    const dispatch = useDispatch();
     const projectAreaRef = useRef(null);
 
     const { formData } = useSelector((state) => state.form);
@@ -62,27 +63,29 @@ const Feasibility = () => {
                     </Col>
                 )}
 
-                <Col lg={6} md={6} sm={12} className="mb-4">
-                        <Card style={cardStyle} className="h-100">
-                            <Card.Body>
-                                <StepsComponent activeStep={activeStep} />
-                            </Card.Body>
-                        </Card>
+                <Col lg={5} md={6} sm={12} className="mb-4">
+                    <Card style={cardStyle} className="h-100">
+                        <Card.Body>
+                            <StepsComponent
+                                activeStep={activeStep}
+                                handleNext={handleNext}
+                                handlePrevious={handleBack}
+                            />
+                        </Card.Body>
+                    </Card>
                 </Col>
 
-                <Col lg={4} md={3} sm={12} className="mb-4">
-                        <Card style={cardStyle} className="h-100">
-                            <Card.Body>
+                <Col lg={5} md={3} sm={12} className="mb-4">
+                    <Card style={cardStyle} className="h-100">
+                        <Card.Body>
+                            {activeStep < 1 ? (
                                 <ProjectAreaCalculations formData={formData} ref={projectAreaRef} />
-                            </Card.Body>
-                        </Card>
-                </Col>
-                <Col lg={6} md={3} sm={12} className="mb-4">
-                        <Card style={cardStyle} className="h-100">
-                            <Card.Body>
+                            ) : (
                                 <Pdf2 formData={formData} ref={projectAreaRef} />
-                            </Card.Body>
-                        </Card>
+                            )}
+                            
+                        </Card.Body>
+                    </Card>
                 </Col>
             </Row>
         </Container>

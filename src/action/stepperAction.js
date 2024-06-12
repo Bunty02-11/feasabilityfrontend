@@ -4,6 +4,8 @@ import React from 'react';
 import { useReactToPrint } from 'react-to-print';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+// Rest of your Pdf.js code
+
 
 const initialState = {
   formData: {
@@ -22,6 +24,13 @@ const initialState = {
     rehabFsi: '',
     rehabComponent: '',
     landRate: '',
+    constructionCostRehab: '',
+    constructionCostSale: '',
+    sraExpenses: '',
+    extraExpenses: '',
+    rentAmount: '',
+    tenure: '',
+    buildingBuiltUp: '',    
   },
   activeStep: 0,
   pdfGenerated: false,

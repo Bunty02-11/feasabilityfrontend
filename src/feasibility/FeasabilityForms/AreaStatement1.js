@@ -55,67 +55,78 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
 
     return (
         <FormContainer darkMode={darkMode.value} onSubmit={handleSubmit}>
-            <StyledTextField
-                id="plotArea"
-                label="Area of the Plot"
+           <StyledTextField
+                id="constructionCostRehab"
+                label="Construction Cost of Rehab"
                 variant="outlined"
-                value={formData.plotArea}
-                onChange={(e) => handleChange(e, 'plotArea')}
+                value={formData.constructionCostRehab}
+                onChange={(e) => handleChange(e, 'constructionCostRehab')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="road_setbackArea"
-                label="Less:- Road set back area"
+                id="constructionCostSale"
+                label="Construction Cost of Sale"
                 variant="outlined"
-                value={formData.road_setbackArea}
-                onChange={(e) => handleChange(e, 'road_setbackArea')}
+                value={formData.constructionCostSale}
+                onChange={(e) => handleChange(e, 'constructionCostSale')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="road_setbackArea"
-                label="Net Area"
+                id="sraExpenses"
+                label="SRA Expenses"
                 variant="outlined"
-                value={formData.road_setbackArea}
-                onChange={(e) => handleChange(e, 'road_setbackArea')}
+                value={formData.sraExpenses}
+                onChange={(e) => handleChange(e, 'sraExpenses')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="Add:- Road set back area"
-                label=""
+                id="extraExpenses"
+                label="Out of Pocket Expenses"
                 variant="outlined"
-                value={formData.Other_Reservation}
-                onChange={(e) => handleChange(e, 'Other_Reservation')}
+                value={formData.extraExpenses}
+                onChange={(e) => handleChange(e, 'extraExpenses')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="Total  Area for F.S.I."
-                label="Nos. of existing tenements"
+                id="rentAmount"
+                label="Rent Amount"
                 variant="outlined"
-                value={formData.tenementsRequired}
-                onChange={(e) => handleChange(e, 'tenementsRequired')}
+                value={formData.rentAmount}
+                onChange={(e) => handleChange(e, 'rentAmount')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="road_Width"
-                label="F.S.I. Permissible"
+                id="tenure"
+                label="Nos. of Months"
                 variant="outlined"
-                value={formData.road_Width}
-                onChange={(e) => handleChange(e, 'road_Width')}
+                value={formData.tenure}
+                onChange={(e) => handleChange(e, 'tenure')}
+                required
+                fullWidth
+                margin="normal"
+                darkMode={darkMode.value}
+            />
+            <StyledTextField
+                id="buildingBuiltUp"
+                label="Rate / sft on Building built up"
+                variant="outlined"
+                value={formData.buildingBuiltUp}
+                onChange={(e) => handleChange(e, 'buildingBuiltUp')}
                 required
                 fullWidth
                 margin="normal"

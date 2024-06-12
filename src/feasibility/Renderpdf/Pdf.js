@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
 import useFormDataCalculations from './Calculation';
 
@@ -34,14 +34,14 @@ const ProjectAreaCalculations = ({ formData }) => {
         border: `2px solid ${darkMode.value ? '#fff' : '#000'}`,
         padding: '8px',
         textAlign: 'left',
-        fontSize: '10px',
+        fontSize: '14px',
     };
 
     const thStyle = {
         ...thTdStyle,
         backgroundColor: darkMode.value ? '#444' : '#f2f2f2',
         textAlign: 'center',
-        fontSize: '12px',
+        fontSize: '14px',
     };
 
     const highlightStyle = {
@@ -58,7 +58,7 @@ const ProjectAreaCalculations = ({ formData }) => {
 
 
     return (
-        <div id="pdf-container" className="pdf" style={containerStyle}>
+        <div  style={containerStyle}>
             <h3 style={headingStyle}>{formData.plotName}</h3>
             <table style={tableStyle}>
                 <thead>
@@ -73,7 +73,7 @@ const ProjectAreaCalculations = ({ formData }) => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td style={thTdStyle}>Reg. 33(10)</td>
+                        <td style={thTdStyle}>Regulation<br/>33(10)</td>
                         <td style={thTdStyle}>Slum</td>
                         <td style={thTdStyle}></td>
                     </tr>
@@ -135,12 +135,13 @@ const ProjectAreaCalculations = ({ formData }) => {
                         <th colSpan="3" style={thStyle}>AREA STATEMENT</th>
                     </tr>
                     <tr>
-                        <th style={thStyle}>Sr No</th>
+                        <th style={thStyle}>Sr .No</th>
                         <th style={thStyle}>Description</th>
                         <th style={thStyle}>Area in sqm</th>
                     </tr>
                 </thead>
                 <tbody>
+                    
                     <tr>
                         <td style={thTdStyle}>1</td>
                         <td style={thTdStyle}>Area of Plot</td>
@@ -203,7 +204,7 @@ const ProjectAreaCalculations = ({ formData }) => {
                     </tr>
                     <tr>
                         <td style={thTdStyle}>13</td>
-                        <td style={thTdStyle}>Total Sale F.S.I. (1845 X 1.10)</td>
+                        <td style={thTdStyle}>Total Sale F.S.I.</td>
                         <td style={thTdStyle}>{totalSale.toFixed(2)}</td>
                     </tr>
                     <tr>

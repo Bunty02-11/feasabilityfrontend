@@ -56,11 +56,11 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
     return (
         <FormContainer darkMode={darkMode.value} onSubmit={handleSubmit}>
             <StyledTextField
-                id="plotArea"
-                label="Area of the Plot"
+                id="constructionCostRehab"
+                label="Construction cost of Rehab"
                 variant="outlined"
-                value={formData.plotArea}
-                onChange={(e) => handleChange(e, 'plotArea')}
+                value={formData.constructionCostRehab}
+                onChange={(e) => handleChange(e, 'constructionCostRehab')}
                 required
                 fullWidth
                 margin="normal"
