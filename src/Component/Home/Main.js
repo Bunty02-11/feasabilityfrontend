@@ -2,28 +2,30 @@ import React from "react";
 import { Container, Row, Col, Card, Carousel } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
+import Faq from "./Faq";
 
-const MainContainer = () => (
-  <Container className="mt-5">
-    <Row className="justify-content-center mt-5">
+const MainContainer = ({ darkMode }) => (
+  <Container className="mt-5" style={{ backgroundColor: darkMode.value ? "#000" : "#fff", color: darkMode.value ? "#fff" : "#000" }}>
+    <Row className="justify-content-center mt-4">
       <Col
-        xs={8}
-        md={12}
+        xs={20}
+        md={16}
         className="bg-cover bg-center"
         style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1504903271097-d7e7c7f5f7ad?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Nnx8fGVufDB8fHx8fA%3D%3D)",
-          padding: "50% 0",
+          padding: "25% ",
           backgroundSize: "cover",
+          height: "50vh",
         }}
       ></Col>
     </Row>
     <Row className="justify-content-center mt-5">
       <Col xs={12} className="text-center">
-        <h3 className="mb-3 display-6" style={{ color: "#000" }}>
+        <h3 className="mb-3 display-6" style={{ color: darkMode.value ? "#fff" : "#000" }}>
           WHAT'S YOUR NEXT MOVE
         </h3>
-        <h4 className="mb-5" style={{ fontSize: "1.125rem", color: "#000" }}>
+        <h4 className="mb-5" style={{ fontSize: "1.125rem", color: darkMode.value ? "#fff" : "#000" }}>
           VIEW OUR FEATURED LISTINGS
         </h4>
       </Col>
@@ -32,13 +34,13 @@ const MainContainer = () => (
       <Carousel.Item>
         <Row className="justify-content-center mt-2">
           <Col xs={12} md={10} lg={10} className="d-flex justify-content-center">
-            <Card className="bg-secondary text-white p-4" style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
+            <Card className="bg-secondary text-white p-4" style={{ backgroundColor: darkMode.value ? "#333" : "#000", borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
               <Row className="no-gutters">
                 <Col md={8}>
                   <Card.Body>
                     <div className="display-2 text-warning mb-4">“</div>
                     <Card.Text>
-                    Sanjay Balraj Dutt (born 29 July 1959)[4] is an Indian actor who works in Hindi cinema in addition to a few Kannada, Tamil, Punjabi and Telugu films.[5][6] In a career spanning over four decades, Dutt has won several accolades and acted in over 135 films. Sanjay Balraj Dutt (born 29 July 1959)[4] is an Indian actor who works in Hindi cinema in addition to a few Kannada, Tamil, Punjabi and Telugu films.[5][6] In a career spanning over four decades, Dutt has won several accolades and acted in over 135 films.
+                    Sanjay Balraj Dutt (born 29 July 1959)[4] is an Indian actor who works in Hindi cinema in addition to a few Kannada, Tamil, Punjabi and Telugu films.[5][6] In a career spanning over four decades, Dutt has won several accolades and acted in over 135 films.
                     </Card.Text>
                     <div className="font-weight-bold">
                       Sanjay Dutt
@@ -57,7 +59,7 @@ const MainContainer = () => (
       <Carousel.Item>
         <Row className="justify-content-center mt-2">
           <Col xs={12} md={10} lg={10} className="d-flex justify-content-center">
-            <Card className="bg-secondary text-white p-4" style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
+            <Card className="bg-secondary text-white p-4" style={{ backgroundColor: darkMode.value ? "#333" : "#6c757d", borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
               <Row className="no-gutters">
                 <Col md={8}>
                   <Card.Body>
@@ -82,7 +84,7 @@ const MainContainer = () => (
       <Carousel.Item>
         <Row className="justify-content-center mt-2">
           <Col xs={12} md={10} lg={10} className="d-flex justify-content-center">
-            <Card className="bg-secondary text-white p-4" style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
+            <Card className="bg-secondary text-white p-4" style={{ backgroundColor: darkMode.value ? "#000" : "#fff", borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', maxWidth: '1200px' }}>
               <Row className="no-gutters">
                 <Col md={8}>
                   <Card.Body>
@@ -113,7 +115,8 @@ const Main = () => {
 
   return (
     <>
-      <MainContainer />
+      <MainContainer darkMode={darkMode} />
+      <Faq />
       <style>
         {`
           /* Custom CSS to change button color based on theme mode */

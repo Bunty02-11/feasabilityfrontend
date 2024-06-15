@@ -284,7 +284,7 @@ const useFormDataCalculations = (formData, landRate) => {
         localStorage.setItem("consultantFeesSale", consultantFeesSaleValue.toString());
         setConsultantFeesSale(consultantFeesSaleValue);
 
-        
+
         const otherconsultantFeesRehabValue = (totalCostRehabValue * 0.01)
         localStorage.setItem("otherconsultantFeesRehab", otherconsultantFeesRehabValue.toString());
         setOtherConsultantFeesRehab(otherconsultantFeesRehabValue);
@@ -397,9 +397,6 @@ const useFormDataCalculations = (formData, landRate) => {
         profit,
         carParking2,
         netProfit
-
-
-
     };
 };
 

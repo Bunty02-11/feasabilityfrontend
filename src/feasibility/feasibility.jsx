@@ -6,8 +6,6 @@ import StepsComponent from '../Stepper/Stepper';
 import ProjectAreaCalculations from './Renderpdf/Pdf';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import useDarkMode from 'use-dark-mode';
-import { ResizableBox } from 'react-resizable';
-import 'react-resizable/css/styles.css'; // Import styles for react-resizable
 import Pdf2 from './Renderpdf/Pdf2';
 
 
@@ -46,20 +44,11 @@ const Feasibility = () => {
 
                 {showSidebar && (
                     <Col lg={2} md={3} sm={12} className="mb-4">
-                        <ResizableBox
-                            width={200} // Initial width of the sidebar
-                            height={Infinity}
-                            axis="x"
-                            minConstraints={[150, Infinity]}
-                            maxConstraints={[400, Infinity]}
-                            style={{ height: '100%' }}
-                        >
                             <Card style={cardStyle} className="h-100">
                                 <Card.Body>
                                     <Sidebar />
                                 </Card.Body>
                             </Card>
-                        </ResizableBox>
                     </Col>
                 )}
 

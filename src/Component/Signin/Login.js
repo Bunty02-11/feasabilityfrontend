@@ -1,15 +1,44 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import { encrypt } from '../../lib/encrypt';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const secretKey = 'XXXYTHSRATAV';
+
+    const encryptData = (data) => {
+        const encrypted = encrypt(data, secretKey);
+        console.log(`Encrypting data: ${data} -> ${encrypted}`);
+        return encrypted;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log('Username:', username);
-        // console.log('Password:', password);
+        const encryptedEmail = encryptData(email);
+        const encryptedPassword = encryptData(password);
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/auth/login', {
+                email: encryptedEmail,
+                password: encryptedPassword,
+            });
+            console.log(response);
+            if (response.status === 200) {
+                navigate('/feasibility');
+                const encryptedSessionId = encryptData(response.data);
+                localStorage.setItem('sessionId', encryptedSessionId);
+               
+            } else {
+                console.error('Login failed:', response.statusText);
+            }
+        } catch (error) {
+            console.error('There was an error logging in!', error);
+        }
     };
 
     return (
@@ -20,16 +49,16 @@ const LoginForm = () => {
                     <h3 className="text-center">India</h3>
                     <Form onSubmit={handleSubmit} className="mb-5">
                         <Form.Group controlId="username">
-                            <Form.Label>Username</Form.Label>
+                            <Form.Label>Email</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </Form.Group>
-                        {/* <Form.Group controlId="password">
+                        <Form.Group controlId="password">
                             <Form.Label>Password</Form.Label>
                             <Form.Control
                                 type="password"
@@ -38,7 +67,7 @@ const LoginForm = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                        </Form.Group> */}
+                        </Form.Group>
                         <div className="text-center mt-4">
                             <Button variant="primary" type="submit">
                                 Continue
@@ -52,4 +81,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
