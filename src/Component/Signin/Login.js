@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import { encrypt } from '../../lib/encrypt';
+import { decrypt, encrypt } from '../../lib/encrypt';
 import { useNavigate } from 'react-router-dom';
+import { SessionContext } from '../../Context';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { sessionId, setSessionId } = useContext(SessionContext);
     const navigate = useNavigate();
 
     const secretKey = 'XXXYTHSRATAV';
 
-    const encryptData = (data) => {
+       const encryptData = (data) => {
         const encrypted = encrypt(data, secretKey);
-        console.log(`Encrypting data: ${data} -> ${encrypted}`);
         return encrypted;
     };
 
@@ -27,12 +28,20 @@ const LoginForm = () => {
                 email: encryptedEmail,
                 password: encryptedPassword,
             });
-            console.log(response);
+
+            console.log('Response from server:', response);
+
             if (response.status === 200) {
-                navigate('/feasibility');
-                const encryptedSessionId = encryptData(response.data);
-                localStorage.setItem('sessionId', encryptedSessionId);
-               
+                const sessionId = response.data.sessionId || response.data; // Adjust based on actual response structure
+                console.log('Session ID received:', sessionId);
+              const data =   decrypt(sessionId.data.sessionId, secretKey);
+              console.log(data, 'data');
+                if (sessionId) {
+                    setSessionId(data); // Set the session ID in the context
+                    navigate('/feasibility');
+                } else {
+                    console.error('Session ID is missing in the response');
+                }
             } else {
                 console.error('Login failed:', response.statusText);
             }

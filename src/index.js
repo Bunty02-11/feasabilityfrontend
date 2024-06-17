@@ -4,13 +4,16 @@ import { Provider } from 'react-redux'; // Import Provider
 import store from './Store'; // Import your Redux store
 import './index.css';
 import App from './App';
+import { SessionProvider } from './Context'; // Import SessionProvider
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <SessionProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </SessionProvider>
   </Provider>,
   document.getElementById('root')
 );
