@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { decrypt, encrypt } from '../../lib/encrypt';
 import { useNavigate } from 'react-router-dom';
 import { SessionContext } from '../../Context';
+import Header from '../Layout/Header/Header';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -13,7 +14,14 @@ const LoginForm = () => {
 
     const secretKey = 'XXXYTHSRATAV';
 
-       const encryptData = (data) => {
+    useEffect(() => {
+        // Check if user is already logged in
+        if (sessionId) {
+            navigate('/feasibility');
+        }
+    }, [sessionId, navigate]);
+
+    const encryptData = (data) => {
         const encrypted = encrypt(data, secretKey);
         return encrypted;
     };
@@ -34,8 +42,8 @@ const LoginForm = () => {
             if (response.status === 200) {
                 const sessionId = response.data.sessionId || response.data; // Adjust based on actual response structure
                 console.log('Session ID received:', sessionId);
-              const data =   decrypt(sessionId.data.sessionId, secretKey);
-              console.log(data, 'data');
+                const data = decrypt(sessionId.data.sessionId, secretKey);
+                console.log(data, 'data');
                 if (sessionId) {
                     setSessionId(data); // Set the session ID in the context
                     navigate('/feasibility');
@@ -51,41 +59,44 @@ const LoginForm = () => {
     };
 
     return (
-        <Container>
-            <Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                    <h1 className="text-center">Enter your email to join us or sign in.</h1>
-                    <h3 className="text-center">India</h3>
-                    <Form onSubmit={handleSubmit} className="mb-5">
-                        <Form.Group controlId="username">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </Form.Group>
-                        <div className="text-center mt-4">
-                            <Button variant="primary" type="submit">
-                                Continue
-                            </Button>
-                        </div>
-                    </Form>
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <Header />
+            <Container style={{ marginTop: '100px' }}>
+                <Row>
+                    <Col md={{ span: 6, offset: 3 }}>
+                        <h1 className="text-center">Enter your email to join us or sign in.</h1>
+                        <h3 className="text-center">India</h3>
+                        <Form onSubmit={handleSubmit} className="mb-5">
+                            <Form.Group controlId="username">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="password">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </Form.Group>
+                            <div className="text-center mt-4">
+                                <Button variant="primary" type="submit">
+                                    Continue
+                                </Button>
+                            </div>
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     );
 };
 

@@ -10,9 +10,10 @@ const Footer = () => {
         padding: '20px',
         backgroundColor: darkMode.value ? '#000' : '#fff',
         color: darkMode.value ? '#fff' : '#000',
-        marginTop: '200px',
+        marginTop: '20px',
         transition: 'background-color 0.3s, color 0.3s',
-        borderTop: `2px solid ${darkMode.value ? '#fff' : '#000'}` // Upper border style
+        borderTop: `2px solid ${darkMode.value ? '#fff' : '#000'}`, // Upper border style
+        // height: '100px'
     };
 
     return (

@@ -54,30 +54,30 @@ const FAQ = () => {
     };
 
     return (
-        <div className={`bg-${darkMode.value ? '#000' : '#fff'} d-flex justify-content-center align-items-center min-vh-100`}>
+        <div className={`d-flex justify-content-center align-items-center min-vh-100`} style={{ backgroundColor: darkMode.value ? '#000' : '#f8f9fa', color: darkMode.value ? '#fff' : '#000' }}>
             <Container>
-                <Row>
-                    <Col>
-                        <h1 className={`text-${darkMode.value ? 'light' : 'dark'} mb-4`} style={{ fontWeight: 'bold', fontSize: '3rem'}}>Frequently Asked Questions</h1>
+                <Row className="justify-content-center">
+                    <Col xs={12} md={8} lg={8}>
+                        <h1 className={`text-${darkMode.value ? 'light' : 'dark'} mb-4 text-center`} style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>Frequently Asked Questions</h1>
                         {faqData.map((faq, index) => (
                             <Card
                                 key={index}
-                                className="mb-2"
-                                style={{ borderRadius: '15px', height: 'auto', marginTop: '10px', backgroundColor: darkMode.value ? '#333' : '#fff', color: darkMode.value ? '#fff' : '#000' }}
-                                onClick={() => handleToggleAccordion(index)} // Attach onClick to the whole card
+                                className="mb-0"
+                                style={{ borderRadius: '15px',border: `0.5px solid ${darkMode.value ? '#fff' : '#000'}`, backgroundColor: darkMode.value ? '#000' : '#fff', color: darkMode.value ? '#fff' : '#000', padding: '10px',  }}
+                                onClick={() => handleToggleAccordion(index)}
                             >
-                                <Card.Header style={{ backgroundColor: 'transparent', border: 'none' }}>
+                                <Card.Header style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <div style={{ fontWeight: 'bold', borderRadius: '25px' }}>
+                                        <div style={{ fontWeight: 'bold' }}>
                                             {faq.question}
                                         </div>
                                         <div>
                                             <Button
                                                 variant="link"
-                                                onClick={(e) => { e.stopPropagation(); handleToggleAccordion(index); }} // Prevent card click event from toggling
+                                                onClick={(e) => { e.stopPropagation(); handleToggleAccordion(index); }}
                                                 aria-controls={`faq-${index}`}
                                                 aria-expanded={expandedIndex === index}
-                                                style={{ color: darkMode.value ? '#fff' : '#000', textDecoration: 'none', borderRadius: '25px' }}
+                                                style={{ color: darkMode.value ? '#fff' : '#000', textDecoration: 'none' }}
                                             >
                                                 {expandedIndex === index ? '▲' : '▼'}
                                             </Button>
@@ -86,7 +86,7 @@ const FAQ = () => {
                                 </Card.Header>
                                 <Collapse in={expandedIndex === index}>
                                     <div id={`faq-${index}`}>
-                                        <Card.Body style={{ borderRadius: '10px' }}>{faq.answer}</Card.Body>
+                                        <Card.Body>{faq.answer}</Card.Body>
                                     </div>
                                 </Collapse>
                             </Card>

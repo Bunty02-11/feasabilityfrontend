@@ -7,6 +7,7 @@ import ProjectAreaCalculations from './Renderpdf/Pdf';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import useDarkMode from 'use-dark-mode';
 import Pdf2 from './Renderpdf/Pdf2';
+import Header from '../Component/Layout/Header/Header';
 
 
 
@@ -36,48 +37,51 @@ const Feasibility = () => {
     };
 
     return (
-        <Container fluid className="py-3">
-            <Row>
-                <Button variant="outline-dark" className="d-md-none mb-3" onClick={toggleSidebar}>
-                    {showSidebar ? 'Close Menu' : 'Open Menu'}
-                </Button>
+        <>
+            <Header />
+            <Container fluid className="py-3" style={{marginTop: '60px'}}>
+                <Row>
+                    <Button variant="outline-dark" className="d-md-none mb-3" onClick={toggleSidebar}>
+                        {showSidebar ? 'Close Menu' : 'Open Menu'}
+                    </Button>
 
-                {showSidebar && (
-                    <Col lg={2} md={3} sm={12} className="mb-4">
+                    {showSidebar && (
+                        <Col lg={2} md={3} sm={12} className="mb-4">
                             <Card style={cardStyle} className="h-100">
                                 <Card.Body>
                                     <Sidebar />
                                 </Card.Body>
                             </Card>
+                        </Col>
+                    )}
+
+                    <Col lg={5} md={6} sm={12} className="mb-4">
+                        <Card style={cardStyle} className="h-100">
+                            <Card.Body>
+                                <StepsComponent
+                                    activeStep={activeStep}
+                                    handleNext={handleNext}
+                                    handlePrevious={handleBack}
+                                />
+                            </Card.Body>
+                        </Card>
                     </Col>
-                )}
 
-                <Col lg={5} md={6} sm={12} className="mb-4">
-                    <Card style={cardStyle} className="h-100">
-                        <Card.Body>
-                            <StepsComponent
-                                activeStep={activeStep}
-                                handleNext={handleNext}
-                                handlePrevious={handleBack}
-                            />
-                        </Card.Body>
-                    </Card>
-                </Col>
+                    <Col lg={5} md={3} sm={12} className="mb-4">
+                        <Card style={cardStyle} className="h-100">
+                            <Card.Body>
+                                {activeStep < 1 ? (
+                                    <ProjectAreaCalculations formData={formData} ref={projectAreaRef} />
+                                ) : (
+                                    <Pdf2 formData={formData} ref={projectAreaRef} />
+                                )}
 
-                <Col lg={5} md={3} sm={12} className="mb-4">
-                    <Card style={cardStyle} className="h-100">
-                        <Card.Body>
-                            {activeStep < 1 ? (
-                                <ProjectAreaCalculations formData={formData} ref={projectAreaRef} />
-                            ) : (
-                                <Pdf2 formData={formData} ref={projectAreaRef} />
-                            )}
-                            
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     );
 };
 

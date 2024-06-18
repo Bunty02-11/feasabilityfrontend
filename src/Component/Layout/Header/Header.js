@@ -26,10 +26,6 @@ const Header = () => {
   const navigate = useNavigate();
 
 
-
-
-
-
   useEffect(() => {
     if (darkMode.value) {
       document.body.style.backgroundColor = '#000000';
@@ -40,24 +36,35 @@ const Header = () => {
     }
   }, [darkMode.value]);
 
-  const pages = [
-    { name: "Login", link: "/login" },
-    { name: "Register", link: "/register" },
-    { name: "Feasibility", link: "/feasibility" },
-    { name: "Table", link: "/table" },
-  ];
-  const otherItems = ["Pie", "Charts", "Graphs"];
+  const reloadHomePage = () => {
+    // window.location.reload();
+    navigate('/');
+  };
+
+  // const pages = [
+  //   { name: "Login", link: "/login" },
+  //   { name: "Register", link: "/register" },
+  //   { name: "Feasibility", link: "/feasibility" },
+  //   { name: "Table", link: "/table" },
+  // ];
+  // const otherItems = ["Pie", "Charts", "Graphs"];
 
   const headerStyle = {
     backgroundColor: darkMode.value ? '#000' : '#fff',
     color: darkMode.value ? '#fff' : '#000',
+    position: 'sticky',
+    top: 0,
+    zIndex: 999,
+    transition: 'background-color 0.3s, color 0.3s',
+    padding: '10px 0',
+    marginBottom: '-47px',
+    // boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   };
 
   const logoStyle = {
-    fontSize: '24px',
+    fontSize: '32px',
     fontWeight: 'bold',
-    color: darkMode.value ? '#fff' : '#000',
-  };
+    color: darkMode.value ? '#fff' : '#000',  };
 
   const linkStyle = {
     color: darkMode.value ? '#fff' : '#000',
@@ -156,83 +163,15 @@ const Header = () => {
 };
 
 
+
   return (
     <header style={headerStyle}>
       <Container fluid>
         <Row className="align-items-center">
-          <Col xs={12} md={4} className="text-center text-md-left">
-            <div style={logoStyle}>Feasibility</div>
+          <Col xs={12} md={4} className="text-center text-md-start">
+            <div style={logoStyle} onClick={reloadHomePage}>Feasibility</div>
           </Col>
           <Col xs={12} md={4} className="d-none d-md-block">
-            <nav>
-              <ul className="d-flex justify-content-center list-unstyled mb-0">
-                <li className="mx-3">
-                  <a
-                    href="#dashboard"
-                    style={boldLinkStyle}
-                    onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                    onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                  >
-                    Dashboard
-                  </a>
-                </li>
-                <li
-                  className="mx-3 position-relative"
-                  onMouseEnter={() => setIsPagesHovering(true)}
-                  onMouseLeave={() => setIsPagesHovering(false)}
-                >
-                  <a
-                    style={linkStyle}
-                    onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                    onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                  >
-                    Pages
-                  </a>
-                  {isPagesHovering && (
-                    <ul style={{ ...dropdownMenuStyle, display: 'block' }}>
-                      {pages.map((page, index) => (
-                        <li key={index}>
-                          <Link to={page.link} style={dropdownItemStyle}>{page.name}</Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-                <li
-                  className="mx-3 position-relative"
-                  onMouseEnter={() => setIsOtherHovering(true)}
-                  onMouseLeave={() => setIsOtherHovering(false)}
-                >
-                  <a
-                    href="#other"
-                    style={boldLinkStyle}
-                    onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                    onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                  >
-                    Other
-                  </a>
-                  {isOtherHovering && (
-                    <ul style={{ ...dropdownMenuStyle, display: 'block' }}>
-                      {otherItems.map((item, index) => (
-                        <li key={index}>
-                          <a href="#other" style={dropdownItemStyle}>{item}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-                <li className="mx-3">
-                  <a
-                    href="#layout"
-                    style={boldLinkStyle}
-                    onMouseEnter={(e) => e.target.style.color = linkHoverStyle.color}
-                    onMouseLeave={(e) => e.target.style.color = linkStyle.color}
-                  >
-                    Layout
-                  </a>
-                </li>
-              </ul>
-            </nav>
           </Col>
           <Col xs={12} md={4} className="d-flex justify-content-center justify-content-md-end align-items-center mt-3 mt-md-0">
             <Toggle checked={darkMode.value} onChange={darkMode.toggle} />

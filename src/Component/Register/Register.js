@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Header from '../Layout/Header/Header';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -20,6 +21,8 @@ const Register = () => {
     };
 
     return (
+        <>
+        <Header />
         <Container className="p-3">
             <Row className="justify-content-center">
                 <Col md={12} className="text-center">
@@ -115,6 +118,7 @@ const Register = () => {
                 </Col>
             </Row>
         </Container>
+        </>
     );
 };
 
