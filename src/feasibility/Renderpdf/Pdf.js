@@ -1,10 +1,10 @@
 import React from 'react';
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
-import useFormDataCalculations from './Calculation';
+import useformValuesCalculations from './Calculation';
 
-const ProjectAreaCalculations = ({ formData }) => {
+const ProjectAreaCalculations = ({ formData, formValues }) => {
     const darkMode = useDarkMode(false); // Initialize darkMode state
-    const { netArea, tenement_perDensity,  societyOffice, amenities, totalTenements, totalArea_FSI, fsi, rehabFsi, rehabComponent, totalSale, fungible, totalArea_includingFungible, rehabConstructionArea, saleConstructionArea  } = useFormDataCalculations(formData);
+    const { netArea, tenement_perDensity,  societyOffice, amenities, totalTenements, totalArea_FSI, fsi, rehabFsi, rehabComponent, totalSale, fungible, totalArea_includingFungible, rehabConstructionArea, saleConstructionArea  } = useformValuesCalculations(formValues);
 
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
@@ -59,7 +59,7 @@ const ProjectAreaCalculations = ({ formData }) => {
 
     return (
         <div  style={containerStyle}>
-            <h3 style={headingStyle}>{formData.plotName}</h3>
+            <h3 style={headingStyle}>{formValues.plotName}</h3>
             <table style={tableStyle}>
                 <thead>
                     <tr>
@@ -80,22 +80,22 @@ const ProjectAreaCalculations = ({ formData }) => {
                     <tr>
                         <td style={thTdStyle}>1</td>
                         <td style={thTdStyle}>Area of the Plot</td>
-                        <td style={thTdStyle}>{formData.plotArea}</td>
+                        <td style={thTdStyle}>{formValues.plotArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>2</td>
                         <td style={thTdStyle}>Less: RG area</td>
-                        <td style={thTdStyle}>{formData.rgArea}</td>
+                        <td style={thTdStyle}>{formValues.rgArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>3</td>
                         <td style={thTdStyle}>Less: Road set back area</td>
-                        <td style={thTdStyle}>{formData.less_road_setbackArea}</td>
+                        <td style={thTdStyle}>{formValues.less_road_setbackArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>4</td>
                         <td style={thTdStyle}>Less: Other Reservations</td>
-                        <td style={thTdStyle}>{formData.Other_Reservation}</td>
+                        <td style={thTdStyle}>{formValues.Other_Reservation}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>5</td>
@@ -110,7 +110,7 @@ const ProjectAreaCalculations = ({ formData }) => {
                     <tr>
                         <td style={thTdStyle}>7</td>
                         <td style={thTdStyle}>No. of existing tenements</td>
-                        <td style={thTdStyle}>{formData.tenementsRequired}</td>
+                        <td style={thTdStyle}>{formValues.tenementsRequired}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>8</td>
@@ -145,22 +145,22 @@ const ProjectAreaCalculations = ({ formData }) => {
                     <tr>
                         <td style={thTdStyle}>1</td>
                         <td style={thTdStyle}>Area of Plot</td>
-                        <td style={thTdStyle}>{formData.plotArea}</td>
+                        <td style={thTdStyle}>{formValues.plotArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>2</td>
                         <td style={thTdStyle}>Less: RG area</td>
-                        <td style={thTdStyle}>{formData.rgArea}</td>
+                        <td style={thTdStyle}>{formValues.rgArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>3</td>
                         <td style={thTdStyle}>Less: Road set back area</td>
-                        <td style={thTdStyle}>{formData.less_road_setbackArea}</td>
+                        <td style={thTdStyle}>{formValues.less_road_setbackArea}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>4</td>
                         <td style={thTdStyle}>Less: Other Reservations</td>
-                        <td style={thTdStyle}>{formData.Other_Reservation}</td>
+                        <td style={thTdStyle}>{formValues.Other_Reservation}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>5</td>
@@ -170,7 +170,7 @@ const ProjectAreaCalculations = ({ formData }) => {
                     <tr>
                         <td style={thTdStyle}>6</td>
                         <td style={thTdStyle}>Add: Road set back area</td>
-                        <td style={thTdStyle}>{(Number(formData.less_road_setbackArea) + Number(formData.Other_Reservation) + Number(formData.rgArea)).toFixed(2)}</td>
+                        <td style={thTdStyle}>{(Number(formValues.less_road_setbackArea) + Number(formValues.Other_Reservation) + Number(formValues.rgArea)).toFixed(2)}</td>
                     </tr>
                     <tr>
                         <td style={thTdStyle}>7</td>

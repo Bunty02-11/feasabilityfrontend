@@ -9,7 +9,7 @@ function getKey(key) {
 }
 
 function encrypt(text, key) {
-    console.log(text,key,'key')
+    //console.log(text,key,'key')
     if (!text || !key) {
       throw new Error('Text and key are required for encryption');
     }
@@ -37,7 +37,7 @@ function encrypt(text, key) {
 
 // Encryption Function
 // function encrypt(text, key) {
-//     console.log(text,key)
+//     //console.log(text,key)
 //     const shift = getKey(key);
 //     let encrypted = '';
 

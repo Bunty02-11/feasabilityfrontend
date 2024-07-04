@@ -98,7 +98,9 @@ const StyledButton = styled.button`
 const StepsComponent = ({ activeStep, handleNext, handlePrevious }) => {
     const darkMode = useDarkMode(false);
     const dispatch = useDispatch();
-    const { formData } = useSelector((state) => state.form);
+    const formValues = useSelector((state) => state.form.formValues);
+    //console.log(formValues);
+    const status = useSelector((state) => state.form.status);
     const Navigate = useNavigate(); // Initialize useHistory hook
 
     // const handleDownloadPDF = () => { 
@@ -135,8 +137,8 @@ const StepsComponent = ({ activeStep, handleNext, handlePrevious }) => {
         dispatch(updateFormData({ [field]: value }));
     };
 
-    const handleSubmit = (formData) => {
-        dispatch(submitForm(formData));
+    const handleSubmit = (formValues) => {
+        dispatch(submitForm(formValues));
     };
 
     return (
@@ -153,14 +155,14 @@ const StepsComponent = ({ activeStep, handleNext, handlePrevious }) => {
             <div>
                 {activeStep === 0 && (
                     <FormComponent
-                        formData={formData}
+                        formValues={formValues}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                     />
                 )}
                 {activeStep === 1 && (
                     <FormComponent1
-                        formData={formData}
+                        formValues={formValues}
                         handleChange={handleChange}
                         // handleSubmit={handleSubmit}
                     />

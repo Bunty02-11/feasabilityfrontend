@@ -10,6 +10,9 @@ function DownloadPdf() {
     const dispatch = useDispatch();
     const projectAreaRef = useRef(null);
     const { formData } = useSelector((state) => state.form);
+    const formValues = useSelector((state) => state.form.formValues);
+    //console.log(formValues);
+    const status = useSelector((state) => state.form.status);
 
     const buttonStyle = {
         padding: '10px 20px',
@@ -51,7 +54,7 @@ function DownloadPdf() {
     return (
         <div>
             <div id="pdf-container" className="pdf">
-                <ProjectAreaCalculations formData={formData} ref={projectAreaRef} />
+                <ProjectAreaCalculations formData={formData} ref={projectAreaRef} formValues={formValues} />
                 <Pdf2 formData={formData} ref={projectAreaRef} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>

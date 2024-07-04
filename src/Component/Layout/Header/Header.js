@@ -146,10 +146,10 @@ const Header = () => {
     try {
         const response = await axios.post(`http://localhost:3000/api/auth/logout/${sessionId}`);
 
-        console.log('Response from server:', response);
+        //console.log('Response from server:', response);
 
         if (response.status === 200) {
-            console.log('Logout successful');
+            //console.log('Logout successful');
             // Perform any additional actions needed after logout
             // For example, clearing session data, navigating to a login page, etc.
             clearSessionData(); // Replace with actual method to clear session data

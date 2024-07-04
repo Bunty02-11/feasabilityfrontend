@@ -13,7 +13,7 @@ const calculateIncentive = (plotArea, basic_Ratio) => {
         return 1.10;
     } else if (plotArea <= 50000) {
         if (basic_Ratio <= 2.00) return 1.20;
-        if (basic_Ratio <= 4.00) return 1.00;
+        if (basic_Ratio <= 4.00) return 1.10;
         if (basic_Ratio <= 6.00) return 0.90;
         return 1.20;
     } else if (plotArea <= 100000) {
@@ -109,7 +109,7 @@ const useFormDataCalculations = (formData, landRate) => {
 
         // Check if tenementsRequired is higher than tenement_perDensityValue
         if (tenementsRequired > tenement_perDensityValue) {
-            console.log('The tenementsRequired is higher than the tenement_perDensityValue.');
+            //console.log('The tenementsRequired is higher than the tenement_perDensityValue.');
         } else {
             baseValue = tenement_perDensityValue;
         }
@@ -141,7 +141,7 @@ const useFormDataCalculations = (formData, landRate) => {
         setTotalTenements(totalTenementsValue);
 
         // Calculate totalArea_FSIValue
-        const totalArea_FSIValue = netAreaValue + roadSetbackArea + otherReservation;
+        const totalArea_FSIValue = netAreaValue + roadSetbackArea + otherReservation + rgArea;
         localStorage.setItem("totalArea_FSI", totalArea_FSIValue.toString());
         setTotalArea_FSI(totalArea_FSIValue);
 
@@ -172,14 +172,16 @@ const useFormDataCalculations = (formData, landRate) => {
         setRehabComponent(rehabComponentValue);
 
         // Calculate landRateValue
-        const basic_RatioValue = landRate / 30250;
+        const basic_RatioValue = formData.landRate / 30250;
         localStorage.setItem("basic_Ratio", basic_RatioValue.toString());
         setBasic_Ratio(basic_RatioValue);
+        //console.log(basic_RatioValue, "rajaJi");
 
         // Calculate incentive
         const incentiveValue = calculateIncentive(plotArea, basic_RatioValue);
         localStorage.setItem("Incentive", incentiveValue.toString());
         setIncentive(incentiveValue);
+        //console.log(incentiveValue, "netaji");
 
         // Calculate totalSaleValue
         const totalSaleValue = rehabComponentValue * incentiveValue;
@@ -269,12 +271,12 @@ const useFormDataCalculations = (formData, landRate) => {
         const totalCostRehabValue = (constructionCostRehabSqValue + rentValue + infraStructureRehabValue + sraExpensesRehabValue + brokerageValue + shiftingValue + outerExpensesRehabValue)
         localStorage.setItem("totalCostRehab", totalCostRehabValue.toString());
         setTotalCostRehab(totalCostRehabValue);
-        console.log(totalCostRehabValue)
+        //console.log(totalCostRehabValue)
 
         const totalCostSaleValue = (constructionCostSaleSqValue + sraExpensesSaleValue + fungibleSaleValue + outerExpensesSaleValue + infraStructureSaleValue)
         localStorage.setItem("totalCostSale", totalCostSaleValue.toString());
         setTotalCostSale(totalCostSaleValue);
-        console.log(typeof (totalCostSaleValue))
+        //console.log(typeof (totalCostSaleValue))
 
         const consultantFeesRehabValue = (totalCostRehabValue * 0.02)
         localStorage.setItem("consultantFeesRehab", consultantFeesRehabValue.toString());

@@ -1,10 +1,10 @@
 import React from 'react'
 import useDarkMode from 'use-dark-mode'; // Import the useDarkMode hook
-import useFormDataCalculations from './Calculation';
+import useformValuesCalculations from './Calculation';
 
-function Pdf2({ formData }) {
+function Pdf2({ formData, formValues }) {
     const darkMode = useDarkMode(false); // Initialize darkMode state
-    const {  rehabComponent, totalArea_includingFungible, rehabConstructionArea, saleConstructionArea, projectCostSale, constructionRehabAreaSQFT, constructionSaleAreaSQFT, constructionCostRehabSq,constructionCostSaleSq, sraExpensesRehab, sraExpensesSale,infraStructureRehab, infraStructureSale, fungibleSale, outerExpensesRehab, outerExpensesSale, rent, brokerage, shifting, totalCostRehab, totalCostSale, consultantFeesRehab, consultantFeesSale,otherconsultantFeesRehab ,otherconsultantFeesSale, totalIndirectCostRehab, totalIndirectCostSale, projectCostRehab, projectCostRehabSale, saleAbleCarpetArea, reraCarpetArea, saleBUA, profit, carParking2, netProfit } = useFormDataCalculations(formData);
+    const {  rehabComponent, totalArea_includingFungible, rehabConstructionArea, saleConstructionArea, projectCostSale, constructionRehabAreaSQFT, constructionSaleAreaSQFT, constructionCostRehabSq,constructionCostSaleSq, sraExpensesRehab, sraExpensesSale,infraStructureRehab, infraStructureSale, fungibleSale, outerExpensesRehab, outerExpensesSale, rent, brokerage, shifting, totalCostRehab, totalCostSale, consultantFeesRehab, consultantFeesSale,otherconsultantFeesRehab ,otherconsultantFeesSale, totalIndirectCostRehab, totalIndirectCostSale, projectCostRehab, projectCostRehabSale, saleAbleCarpetArea, reraCarpetArea, saleBUA, profit, carParking2, netProfit } = useformValuesCalculations(formValues);
 
     const containerStyle = {
         fontFamily: 'Arial, sans-serif',
@@ -217,7 +217,7 @@ function Pdf2({ formData }) {
                         <td style={thTdStyle}></td>
                         <td style={thTdStyle}>Rate / sft on Building built up</td>
                         <td style={thTdStyle}>Rate / sft</td>    
-                        <td style={thTdStyle} colSpan={'2'}>{formData.buildingBuiltUp}</td>
+                        <td style={thTdStyle} colSpan={'2'}>{formValues.buildingBuiltUp}</td>
                     </tr>
                     <tr style={highlightStyle}>
                         <td style={thTdStyle}></td>

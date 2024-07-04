@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useRef ,useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Sidebar from '../feasibility/Sidebar/Sidebar';
 import StepsComponent from '../Stepper/Stepper';
@@ -8,6 +7,8 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import useDarkMode from 'use-dark-mode';
 import Pdf2 from './Renderpdf/Pdf2';
 import Header from '../Component/Layout/Header/Header';
+import { setFormValue, submitForm } from '../action/formAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -15,10 +16,17 @@ const Feasibility = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [showSidebar, setShowSidebar] = useState(true); // Show sidebar by default
     const darkMode = useDarkMode();
+    const dispatch = useDispatch();
     const projectAreaRef = useRef(null);
 
     const { formData } = useSelector((state) => state.form);
+    const formValues = useSelector((state) => state.form.formValues);
 
+    useEffect(()=>{
+
+        console.log(formData,formValues)
+
+    },[formData,formValues])
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -36,10 +44,19 @@ const Feasibility = () => {
         setShowSidebar(!showSidebar);
     };
 
+    const handleInputChange = (e, field) => {
+        dispatch(setFormValue({ field, value: e.target.value }));
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        dispatch(submitForm(formValues));
+    };
+
     return (
         <>
             <Header />
-            <Container fluid className="py-3" style={{marginTop: '60px'}}>
+            <Container fluid className="py-3" style={{ marginTop: '60px' }}>
                 <Row>
                     <Button variant="outline-dark" className="d-md-none mb-3" onClick={toggleSidebar}>
                         {showSidebar ? 'Close Menu' : 'Open Menu'}
@@ -71,9 +88,9 @@ const Feasibility = () => {
                         <Card style={cardStyle} className="h-100">
                             <Card.Body>
                                 {activeStep < 1 ? (
-                                    <ProjectAreaCalculations formData={formData} ref={projectAreaRef} />
+                                    <ProjectAreaCalculations formData={formData} ref={projectAreaRef} formValues={formValues} />
                                 ) : (
-                                    <Pdf2 formData={formData} ref={projectAreaRef} />
+                                    <Pdf2 formData={formData} ref={projectAreaRef} formValues={formValues} />
                                 )}
 
                             </Card.Body>

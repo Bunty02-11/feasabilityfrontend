@@ -4,7 +4,7 @@ const SessionContext = createContext();
 
 const SessionProvider = ({ children }) => {
   const [sessionId, setSessionId] = useState(null);
-console.log(sessionId)
+//console.log(sessionId)
   return (
     <SessionContext.Provider value={{ sessionId, setSessionId }}>
       {children}

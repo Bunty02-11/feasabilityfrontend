@@ -4,7 +4,7 @@ import { SessionContext } from './Context';
 
 const ProtectedRoute = ({ children }) => {
   const { sessionId } = useContext(SessionContext);
-  console.log(sessionId)
+  //console.log(sessionId)
   // const auth = 
   // return (
   //   <Routes>

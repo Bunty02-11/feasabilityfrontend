@@ -7,8 +7,8 @@ const Password = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission here
-        console.log('Username:', username);
-        console.log('Password:', password);
+        //console.log('Username:', username);
+        //console.log('Password:', password);
     };
 
     return (

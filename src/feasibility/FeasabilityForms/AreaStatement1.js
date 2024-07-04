@@ -2,11 +2,13 @@ import { TextField } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
 import useDarkMode from 'use-dark-mode';
+import { setFormValue, submitForm } from '../../action/formAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FormContainer = styled.form`
-    background-color: ${({ darkMode }) => (darkMode ? 'transparent' : 'transparent')};
+    background-color: ${({ darkMode }) => (darkMode ? '#333' : '#fff')};
     padding: 20px;
-    box-shadow: ${({ darkMode }) => (darkMode ? '0 0 10px rgba(255, 255, 255, 02)' : '0 0 5px rgba(0, 0, 0, 02)')};
+    box-shadow: ${({ darkMode }) => (darkMode ? '0 0 10px rgba(255, 255, 255, 0.2)' : '0 0 5px rgba(0, 0, 0, 0.2)')};
     border-radius: 10px;
     margin: 20px auto;
 
@@ -50,17 +52,32 @@ const StyledTextField = styled(TextField)`
     }
 `;
 
-const FormComponent = ({ formData, handleChange, handleSubmit }) => {
+const FormComponent = () => {
+    const dispatch = useDispatch();
     const darkMode = useDarkMode(false); // Initialize darkMode state
+    const formValues = useSelector((state) => state.form.formValues);
+    //console.log(formValues);
+    const status = useSelector((state) => state.form.status);
+
+    const handleInputChange = (e, field) => {
+        dispatch(setFormValue({ field, value: e.target.value }));
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        dispatch(submitForm(formValues));
+    };
+
 
     return (
-        <FormContainer darkMode={darkMode.value} onSubmit={handleSubmit}>
-           <StyledTextField
+        <FormContainer darkMode={darkMode.value} onSubmit={handleFormSubmit}>
+            <StyledTextField
                 id="constructionCostRehab"
+                name="constructionCostRehab"
                 label="Construction Cost of Rehab"
                 variant="outlined"
-                value={formData.constructionCostRehab}
-                onChange={(e) => handleChange(e, 'constructionCostRehab')}
+                value={formValues?.constructionCostRehab || ''}
+                onChange={(e) => handleInputChange(e, 'constructionCostRehab')}
                 required
                 fullWidth
                 margin="normal"
@@ -68,10 +85,11 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
             />
             <StyledTextField
                 id="constructionCostSale"
+                name="constructionCostSale"
                 label="Construction Cost of Sale"
                 variant="outlined"
-                value={formData.constructionCostSale}
-                onChange={(e) => handleChange(e, 'constructionCostSale')}
+                value={formValues.constructionCostSale}
+               onChange={(e) => handleInputChange(e, 'constructionCostSale')}
                 required
                 fullWidth
                 margin="normal"
@@ -79,10 +97,11 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
             />
             <StyledTextField
                 id="sraExpenses"
+                name="sraExpenses"
                 label="SRA Expenses"
                 variant="outlined"
-                value={formData.sraExpenses}
-                onChange={(e) => handleChange(e, 'sraExpenses')}
+                value={formValues.sraExpenses}
+               onChange={(e) => handleInputChange(e, 'sraExpenses')}
                 required
                 fullWidth
                 margin="normal"
@@ -90,21 +109,23 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
             />
             <StyledTextField
                 id="extraExpenses"
+                name="extraExpenses"
                 label="Out of Pocket Expenses"
                 variant="outlined"
-                value={formData.extraExpenses}
-                onChange={(e) => handleChange(e, 'extraExpenses')}
+                value={formValues.extraExpenses}
+               onChange={(e) => handleInputChange(e, 'extraExpenses')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="rentAmount"
+                id="rent"
+                name="rent"
                 label="Rent Amount"
                 variant="outlined"
-                value={formData.rentAmount}
-                onChange={(e) => handleChange(e, 'rentAmount')}
+                value={formValues.rent}
+               onChange={(e) => handleInputChange(e, 'rent')}
                 required
                 fullWidth
                 margin="normal"
@@ -112,26 +133,31 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
             />
             <StyledTextField
                 id="tenure"
+                name="tenure"
                 label="Nos. of Months"
                 variant="outlined"
-                value={formData.tenure}
-                onChange={(e) => handleChange(e, 'tenure')}
+                value={formValues.tenure}
+               onChange={(e) => handleInputChange(e, 'tenure')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
             <StyledTextField
-                id="buildingBuiltUp"
+                id="buildingBuildup"
+                name="buildingBuildup"
                 label="Rate / sft on Building built up"
                 variant="outlined"
-                value={formData.buildingBuiltUp}
-                onChange={(e) => handleChange(e, 'buildingBuiltUp')}
+                value={formValues.buildingBuildup}
+               onChange={(e) => handleInputChange(e, 'buildingBuildup')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
+            <button type="submit" disabled={status === 'loading'}>
+                {status === 'loading' ? 'Submitting...' : 'Submit'}
+            </button>
         </FormContainer>
     );
 };

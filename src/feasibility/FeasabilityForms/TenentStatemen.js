@@ -2,11 +2,14 @@ import { TextField } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
 import useDarkMode from 'use-dark-mode';
+import { setFormValue, submitForm } from '../../action/formAction';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const FormContainer = styled.form`
     background-color: ${({ darkMode }) => (darkMode ? 'transparent' : 'transparent')};
     padding: 20px;
-    box-shadow: ${({ darkMode }) => (darkMode ? '0 0 10px rgba(255, 255, 255, 02)' : '0 0 5px rgba(0, 0, 0, 02)')};
+    box-shadow: ${({ darkMode }) => (darkMode ? '0 0 10px rgba(255, 255, 255, 0.2)' : '0 0 5px rgba(0, 0, 0, 0.2)')};
     border-radius: 10px;
     margin: 20px auto;
 
@@ -50,18 +53,31 @@ const StyledTextField = styled(TextField)`
     }
 `;
 
-const FormComponent = ({ formData, handleChange, handleSubmit }) => {
+const FormComponent = () => {
+    const dispatch = useDispatch();
     const darkMode = useDarkMode(false); // Initialize darkMode state
+    const formValues = useSelector((state) => state.form.formValues);
+    //console.log(formValues);
+    const status = useSelector((state) => state.form.status);
+
+    const handleInputChange = (e, field) => {
+        dispatch(setFormValue({ field, value: e.target.value }));
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        dispatch(submitForm(formValues));
+    };
+
 
     return (
-        <FormContainer darkMode={darkMode.value} onSubmit={handleSubmit}>
-            
+        <FormContainer darkMode={darkMode.value} onSubmit={handleFormSubmit}>
             <StyledTextField
                 id="plotName"
                 label="PlotName"
                 variant="outlined"
-                value={formData.plotName}
-                onChange={(e) => handleChange(e, 'plotName')}
+                value={formValues?.plotName || ''}
+                onChange={(e) => handleInputChange(e, 'plotName')}
                 required
                 fullWidth
                 margin="normal"
@@ -71,8 +87,8 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 id="plotArea"
                 label="Area of the Plot"
                 variant="outlined"
-                value={formData.plotArea}
-                onChange={(e) => handleChange(e, 'plotArea')}
+                value={formValues.plotArea}
+                onChange={(e) => handleInputChange(e, 'plotArea')}
                 required
                 fullWidth
                 margin="normal"
@@ -82,8 +98,8 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 id="rgArea"
                 label="Less: RG Area"
                 variant="outlined"
-                value={formData.rgArea}
-                onChange={(e) => handleChange(e, 'rgArea')}
+                value={formValues.rgArea}
+                onChange={(e) => handleInputChange(e, 'rgArea')}
                 required
                 fullWidth
                 margin="normal"
@@ -93,8 +109,8 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 id="less_road_setbackArea"
                 label="Less:- Road set back area"
                 variant="outlined"
-                value={formData.less_road_setbackArea}
-                onChange={(e) => handleChange(e, 'less_road_setbackArea')}
+                value={formValues.less_road_setbackArea}
+                onChange={(e) => handleInputChange(e, 'less_road_setbackArea')}
                 required
                 fullWidth
                 margin="normal"
@@ -104,8 +120,8 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 id="Other_Reservation"
                 label="Less: Other Reservations"
                 variant="outlined"
-                value={formData.Other_Reservation}
-                onChange={(e) => handleChange(e, 'Other_Reservation')}
+                value={formValues.Other_Reservation}
+                onChange={(e) => handleInputChange(e, 'Other_Reservation')}
                 required
                 fullWidth
                 margin="normal"
@@ -115,8 +131,8 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 id="tenementsRequired"
                 label="Nos. of existing tenements"
                 variant="outlined"
-                value={formData.tenementsRequired}
-                onChange={(e) => handleChange(e, 'tenementsRequired')}
+                value={formValues.tenementsRequired}
+                onChange={(e) => handleInputChange(e, 'tenementsRequired')}
                 required
                 fullWidth
                 margin="normal"
@@ -126,8 +142,8 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 id="roadWidth"
                 label="Road Width"
                 variant="outlined"
-                value={formData.roadWidth}
-                onChange={(e) => handleChange(e, 'roadWidth')}
+                value={formValues.roadWidth}
+                onChange={(e) => handleInputChange(e, 'roadWidth')}
                 required
                 fullWidth
                 margin="normal"
@@ -137,13 +153,16 @@ const FormComponent = ({ formData, handleChange, handleSubmit }) => {
                 id="landRate"
                 label="Land Rate"
                 variant="outlined"
-                value={formData.landRate}
-                onChange={(e) => handleChange(e, 'landRate')}
+                value={formValues.landRate}
+                onChange={(e) => handleInputChange(e, 'landRate')}
                 required
                 fullWidth
                 margin="normal"
                 darkMode={darkMode.value}
             />
+            <button type="submit" disabled={status === 'loading'}>
+                {status === 'loading' ? 'Submitting...' : 'Submit'}
+            </button>
         </FormContainer>
     );
 };

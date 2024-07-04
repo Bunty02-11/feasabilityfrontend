@@ -37,13 +37,13 @@ const LoginForm = () => {
                 password: encryptedPassword,
             });
 
-            console.log('Response from server:', response);
+            //console.log('Response from server:', response);
 
             if (response.status === 200) {
                 const sessionId = response.data.sessionId || response.data; // Adjust based on actual response structure
-                console.log('Session ID received:', sessionId);
+                //console.log('Session ID received:', sessionId);
                 const data = decrypt(sessionId.data.sessionId, secretKey);
-                console.log(data, 'data');
+                //console.log(data, 'data');
                 if (sessionId) {
                     setSessionId(data); // Set the session ID in the context
                     navigate('/feasibility');

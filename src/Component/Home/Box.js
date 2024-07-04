@@ -11,7 +11,7 @@ const Boxofmain = () => {
     const isLoggedIn = localStorage.getItem('sessionId') == null;
 
     if (isLoggedIn) {
-      navigate(`/file`); // Redirect to file page with box number as parameter
+      navigate(`/feasibility`); // Redirect to file page with box number as parameter
     } else {
       navigate('/login'); // Redirect to login page if not logged in
     }
